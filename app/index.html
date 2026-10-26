@@ -1,0 +1,735 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>Coran - Professeur</title><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f1b17"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#0f1b17;--c:#183028;--g:#d4af37;--t:#eef3ef}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Segoe UI,sans-serif;display:flex;flex-direction:column;height:100vh}
+#top{padding:8px;background:var(--c);display:grid;grid-template-columns:1fr 1fr;gap:6px}
+select,input,button{background:#0f1b17;color:var(--t);border:1px solid #2f5a4b;border-radius:6px;padding:5px;font-size:13px}
+button{cursor:pointer}button:hover{border-color:var(--g)}
+#bar{padding:6px 8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;background:#122620;font-size:12px}
+#st{padding:4px 8px;font-size:13px;color:var(--g);min-height:24px}
+#pg{height:4px;background:#2f5a4b}#pb{height:4px;width:0;background:var(--g)}
+#list{flex:1;overflow:auto;padding:8px}
+.bsm{text-align:center;font-family:Amiri,Traditional Arabic,serif;color:var(--g);font-size:26px;margin:6px}
+.a{padding:10px;border-radius:10px;margin-bottom:8px;background:var(--c);cursor:pointer;border:2px solid transparent}
+.a.on{border-color:var(--g);background:#1f4034}
+.ar{font-family:Amiri,Traditional Arabic,serif;font-size:var(--fs,30px);line-height:2.1;direction:rtl;text-align:right}
+.n{color:var(--g);font-size:.6em;border:1px solid var(--g);border-radius:50%;padding:0 6px;margin-right:6px}
+.fr{font-size:13px;opacity:.8;margin-top:4px}
+body.hide .ar{filter:blur(9px)}body.hide .a:hover .ar,body.hide .a.on .ar{filter:none}
+.t-h,.t-s,.t-l{color:#8a9a93}.t-n{color:#e8a33d}.t-p{color:#f0c36a}.t-m{color:#e0553d}.t-o{color:#e0553d}
+.t-q{color:#4db1ff}.t-c{color:#5fd37a}.t-f{color:#5fd37a}.t-w{color:#c58bff}.t-i,.t-a,.t-u,.t-d,.t-b{color:#7fd6d0}.t-g{color:#ff8fb0}
+#lg{font-size:11px;padding:4px 8px;opacity:.7}
+</style><style id="mobile-fix">html,body{max-width:100%;overflow-x:hidden}#top>*{min-width:0}#top select{width:100%;min-width:0}#bar{gap:8px}#bar select{max-width:100%}@media(max-width:600px){#top{grid-template-columns:1fr}.ar{font-size:min(var(--fs,30px),9vw)}}</style><style id="mobile-v2">html{-webkit-text-size-adjust:100%}body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:env(safe-area-inset-bottom);overscroll-behavior:contain;-webkit-tap-highlight-color:transparent}button,select,input{min-height:44px;font-size:16px}#bar{gap:8px;padding:8px}#bar input[type=checkbox]{min-height:0;width:22px;height:22px}#bar input[type=range]{min-height:0}#bar label{display:inline-flex;align-items:center;gap:6px;min-height:44px}.a{padding:12px}.fr{font-size:15px}</style></head><body>
+<div id="top"><select id="r"></select><select id="s"></select></div>
+<div id="bar">
+<button id="pv">⏮</button><button id="pp">▶ Lecture</button><button id="nx">⏭</button>
+<select id="m"><option value="t">Professeur (écoute puis répète)</option><option value="l">Écoute continue</option></select>
+Répét. <input id="rp" type="number" min="1" max="20" value="2" style="width:46px">
+Vitesse <select id="sp"><option>0.75</option><option selected>1</option><option>1.25</option></select>
+<label><input type="checkbox" id="tj" checked>Tajweed</label>
+<label><input type="checkbox" id="tr" checked>Traduction</label>
+<label><input type="checkbox" id="hd">Masquer</label>
+Taille <input type="range" id="fs" min="22" max="48" value="30" style="width:70px">
+</div>
+<div id="pg"><div id="pb"></div></div><div id="st">Choisis un récitant et une sourate, puis Lecture.</div>
+<div id="list"></div>
+<div id="lg">Tajweed : <span class="t-m">madd obligatoire</span> <span class="t-n">madd normal</span> <span class="t-q">qalqala</span> <span class="t-c">ikhfa</span> <span class="t-w">iqlab</span> <span class="t-i">idgham</span> <span class="t-g">ghunna</span> <span class="t-s">lettre muette</span></div>
+<script>
+const R=[["Husary_Muallim_128kbps","Al-Husary - Mu'allim (enseignement)"],["Husary_128kbps","Al-Husary - Murattal"],["Minshawy_Murattal_128kbps","Al-Minshawi - Murattal"],["Minshawy_Mujawwad_192kbps","Al-Minshawi - Mujawwad"],["Abdul_Basit_Murattal_192kbps","Abdul Basit - Murattal"],["Abdul_Basit_Mujawwad_128kbps","Abdul Basit - Mujawwad"],["Alafasy_128kbps","Mishary Alafasy"],["Ali_Jaber_64kbps","Ali Jaber"],["Abdurrahmaan_As-Sudais_192kbps","As-Sudais"],["Saood_ash-Shuraym_128kbps","Ash-Shuraim"],["Maher_AlMuaiqly_128kbps","Maher Al-Muaiqly"],["Abu_Bakr_Ash-Shaatree_128kbps","Abu Bakr Ash-Shaatri"],["Hudhaify_128kbps","Al-Hudhaify"],["Ghamadi_40kbps","Al-Ghamidi"],["Ahmed_ibn_Ali_al-Ajamy_128kbps","Al-Ajamy"],["Muhammad_Ayyoub_128kbps","Muhammad Ayyoub"],["Nasser_Alqatami_128kbps","Nasser Al-Qatami"],["Yasser_Ad-Dussary_128kbps","Yasser Ad-Dussary"]];
+const $=i=>document.getElementById(i),aud=new Audio();let A=[],idx=0,rep=0,tm=null,playing=false,N=1;
+const P=(n,l=3)=>String(n).padStart(l,'0'),RX=/\[([a-z])(?::\d+)?\[([^\]]*)\]/g;
+const sv=()=>localStorage.setItem('cw',JSON.stringify({r:$('r').value,s:$('s').value,m:$('m').value,rp:$('rp').value,sp:$('sp').value,fs:$('fs').value,i:idx}));
+function st(t){$('st').textContent=t}
+async function init(){
+ R.forEach(x=>$('r').add(new Option(x[1],x[0])));
+ const j=await(await fetch('https://api.alquran.cloud/v1/surah')).json();
+ j.data.forEach(x=>$('s').add(new Option(x.number+'. '+x.englishName+' - '+x.name,x.number)));
+ const c=JSON.parse(localStorage.getItem('cw')||'{}');
+ for(const k of ['r','s','m','rp','sp','fs'])if(c[k])$(k).value=c[k];
+ await load(c.i||0);
+}
+async function load(start=0){
+ stop();N=+$('s').value;st('Chargement...');
+ const j=await(await fetch('https://api.alquran.cloud/v1/surah/'+N+'/editions/quran-tajweed,fr.hamidullah,quran-uthmani')).json();
+ const a=j.data[0].ayahs,f=j.data[1].ayahs;A=a.map((x,i)=>{let t=x.text;
+  const SB=s=>{if(i==0&&N!=1&&N!=9){const w=s.replace(RX,'$2').replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[ٱأإآ]/g,'ا').trim().split(/\s+/).slice(0,4).join(' ');if(w==='بسم الله الرحمن الرحيم')return s.split(' ').slice(4).join(' ')}return s};t=SB(t);if(!t.replace(RX,'$2').trim()&&j.data[2])t=SB(j.data[2].ayahs[i].text);return{n:x.numberInSurah,t,f:f[i].text}});
+ render();idx=Math.min(start,A.length-1);mark(idx,false);st(A.length+' versets. Prêt.');
+}
+function render(){
+ const L=$('list');L.innerHTML=(N!=1&&N!=9?'<div class="bsm">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>':'');
+ A.forEach((x,i)=>{const d=document.createElement('div');d.className='a';d.id='a'+i;
+  const t=$('tj').checked?x.t.replace(RX,'<span class="t-$1">$2</span>'):x.t.replace(RX,'$2');
+  d.innerHTML='<div class="ar">'+t+' <span class="n">'+x.n+'</span></div>'+($('tr').checked?'<div class="fr">'+x.f+'</div>':'');
+  d.onclick=()=>{playing=true;go(i)};L.appendChild(d)});
+ document.body.classList.toggle('hide',$('hd').checked);
+ document.documentElement.style.setProperty('--fs',$('fs').value+'px');
+}
+function mark(i,sc=true){document.querySelectorAll('.a.on').forEach(e=>e.classList.remove('on'));
+ const e=$('a'+i);if(e){e.classList.add('on');if(sc)e.scrollIntoView({block:'center',behavior:'smooth'})}}
+function go(i){clearTimeout(tm);idx=i;rep=0;listen()}
+function listen(){aud.src='https://everyayah.com/data/'+$('r').value+'/'+P(N)+P(A[idx].n)+'.mp3';
+ aud.playbackRate=+$('sp').value;aud.play().catch(e=>st('Audio indisponible : '+e.message));mark(idx);
+ $('pb').style.transition='none';$('pb').style.width='0';
+ st('Écoute - verset '+A[idx].n+' ('+(rep+1)+'/'+$('rp').value+')');$('pp').textContent='⏸ Pause';sv()}
+aud.onended=()=>{if(!playing)return;
+ if($('m').value=='t'){const w=aud.duration/aud.playbackRate*1.15+0.7;
+  st('À vous de répéter le verset '+A[idx].n+'...');
+  $('pb').style.transition='width '+w+'s linear';$('pb').style.width='100%';
+  tm=setTimeout(after,w*1000)}else after()};
+function after(){rep++;if(rep<+$('rp').value)return listen();rep=0;
+ if(idx+1<A.length){idx++;listen()}else{stop();st('Sourate terminée. Qu\'Allah accepte.')}}
+function stop(){playing=false;clearTimeout(tm);aud.pause();$('pp').textContent='▶ Lecture';$('pb').style.width='0'}
+$('pp').onclick=()=>{if(playing){stop()}else{playing=true;listen()}};
+$('nx').onclick=()=>{if(idx+1<A.length){playing=true;go(idx+1)}};
+$('pv').onclick=()=>{if(idx>0){playing=true;go(idx-1)}};
+$('s').onchange=()=>load(0);
+['tj','tr','hd','fs'].forEach(i=>$(i).oninput=render);
+['r','m','rp','sp'].forEach(i=>$(i).onchange=()=>{aud.playbackRate=+$('sp').value;sv()});
+init().catch(e=>st('Erreur réseau : '+e.message));
+</script><script>/*VALIDATION_V5*/
+(()=>{
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition,mSel=$("m"),AND=/Android/i.test(navigator.userAgent);
+let BRAVE=false;try{if(navigator.brave&&navigator.brave.isBrave)navigator.brave.isBrave().then(b=>{BRAVE=!!b})}catch(e){}
+const hint=()=>BRAVE?" Brave gère mal la reconnaissance vocale : ouvre ce site dans Chrome.":"";
+if(![...mSel.options].some(o=>o.value=="v"))mSel.add(new Option("Validation vocale (je récite, l'app corrige)","v"));
+if(!localStorage.getItem("cwv2")){mSel.value="v";localStorage.setItem("cwv2","1");sv()}
+const old=aud.onended,FULL=0.85,MINT=0.4;const gx=()=>{const v=parseFloat(localStorage.getItem("cwx")||"0.7");return v>=0.5&&v<=1?v:0.7},wt=()=>0.6+(gx()-0.6)*0.6;let tries=0,ac,busy=false;
+const gs=document.createElement("select");
+[["m","Frère : أحسنتَ"],["f","Sœur : أحسنتِ"],["n","Neutre : أحسنت"]].forEach(o=>gs.add(new Option(o[1],o[0])));
+gs.value=localStorage.getItem("cwg")||"n";gs.onchange=()=>localStorage.setItem("cwg",gs.value);$("bar").appendChild(gs);
+const PH={m:["أَحْسَنْتَ","حَاوِلْ مَرَّةً أُخْرَى"],f:["أَحْسَنْتِ","حَاوِلِي مَرَّةً أُخْرَى"],n:["أحسنت","مرة أخرى"]};
+const LB={m:"أحسنتَ",f:"أحسنتِ",n:"أحسنت"};
+const bd=document.createElement("div");
+bd.style.cssText="position:fixed;inset:0;display:none;align-items:center;justify-content:center;font-size:150px;font-weight:700;pointer-events:none;z-index:9;text-shadow:0 0 30px #000";
+document.body.appendChild(bd);
+function flash(ok){bd.textContent=ok?"✓":"✗";bd.style.color=ok?"#35e06f":"#ff4d4d";bd.style.display="flex";setTimeout(()=>bd.style.display="none",1500)}
+function beep(ok){try{ac=ac||new AudioContext();ac.resume();const t=ac.currentTime;
+ (ok?[660,880,1100]:[220,150]).forEach((fr,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=fr;o.type=ok?"sine":"sawtooth";
+ g.gain.setValueAtTime(.15,t+i*.15);g.gain.exponentialRampToValueAtTime(.001,t+i*.15+.14);o.connect(g);g.connect(ac.destination);o.start(t+i*.15);o.stop(t+i*.15+.15)})}catch(e){}}
+function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="ar-SA";u.rate=.9;const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith("ar"));if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function verdict(ok){flash(ok);beep(ok);const p=PH[gs.value];setTimeout(()=>say(ok?p[0]:p[1]),500)}
+const nz=s=>s.replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"").replace(/[ٱأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ء/g,"").replace(/[^\u0621-\u064A ]/g," ").replace(/\s+/g," ").trim();
+const sk=s=>nz(s).replace(/ا/g,"");
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++)m[i]=[i];for(let j=1;j<=b.length;j++)m[0][j]=j;
+ for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]==b[j-1]?0:1));return m[a.length][b.length]}
+const sim=(a,b)=>1-lev(a,b)/Math.max(a.length,b.length,1);
+function evaluate(words,heard){
+ const H=sk(heard).split(" ").filter(Boolean),Wd=words.map(sk);let j=0,ok=0;
+ const res=Wd.map(w=>{if(!w){ok++;return 1}let best=0,bi=-1;
+  for(let i=j;i<Math.min(H.length,j+4);i++){const s1=sim(w,H[i]),s2=i+1<H.length?sim(w,H[i]+H[i+1]):0,s=Math.max(s1,s2);if(s>best){best=s;bi=s2>s1?i+1:i}}
+  if(best>=(w.length<=2?0.99:wt())){j=bi+1;ok++;return 1}return 0});
+ const full=sim(Wd.join(""),H.join(""));
+ return{score:Math.max(ok/words.length,full>=Math.max(FULL,gx())?full:0),res}}
+function show(words,res){const el=document.querySelector("#a"+idx+" .ar");if(!el)return;const n=el.querySelector(".n").outerHTML;
+ el.innerHTML=words.map((w,i)=>'<span style="color:'+(res[i]?"#35e06f":"#ff4d4d")+'">'+w+"</span>").join(" ")+" "+n}
+const hd=t=>t?" | entendu : "+t.slice(0,90):"";
+function hear(cb){
+ if(!SR){st("Reconnaissance vocale indisponible ici."+(BRAVE?hint():" Utilise Chrome."));return cb(-1,"error","")}
+ if(busy){st("Écoute en cours...");return}
+ busy=true;
+ const words=A[idx].t.replace(RX,"$2").split(" ").filter(Boolean);
+ const ref=(aud.duration||4)/(aud.playbackRate||1),maxMs=Math.min(45000,(ref*2.5+8)*1000),t00=Date.now();
+ let heard=[],spoke=0,fin=false,errd=false,lastI="";
+ const done=why=>{if(fin)return;fin=true;busy=false;const txt=heard.join(" ");
+  if(!txt.trim())return cb(-1,why||"silence","");
+  const x=evaluate(words,txt);show(words,x.res);
+  cb(x.score,(ref>1&&spoke>0&&spoke/1000<ref*MINT)?"fast":"result",txt)};
+ st("🎤 À vous : récitez le verset "+A[idx].n+"...");
+ const run=()=>{if(fin)return;
+  const rc=new SR();rc.lang="ar-SA";rc.interimResults=AND;rc.maxAlternatives=1;let got=false,s0=0;
+  rc.onspeechstart=()=>{s0=Date.now()};rc.onspeechend=()=>{if(s0){spoke+=Date.now()-s0;s0=0}};
+  rc.onresult=e=>{for(let k=e.resultIndex;k<e.results.length;k++){const r=e.results[k];if(r.isFinal){got=true;heard.push(r[0].transcript);lastI=""}else lastI=r[0].transcript}};
+  rc.onerror=e=>{if(e.error=="no-speech"||e.error=="aborted")return;errd=true;fin=true;busy=false;
+   st("⚠ Micro : "+e.error+(e.error=="not-allowed"?" - autorise le micro (cadenas du navigateur).":".")+hint());cb(-1,"error","")};
+  rc.onend=()=>{if(fin||errd)return;
+   if(AND){if(!heard.length&&lastI)heard.push(lastI);done(heard.length?undefined:"silence");return}
+   const over=Date.now()-t00>maxMs;
+   if(got&&!over){setTimeout(run,120);return}
+   if(heard.length||over){done(heard.length?undefined:"silence");return}
+   setTimeout(run,120)};
+  try{rc.start()}catch(e){fin=true;busy=false;st("⚠ Micro : "+e.message+hint());cb(-1,"error","")}};
+ run()}
+function nxt(){if(playing){rep=1e9;after()}}
+const mb=document.createElement("button");
+mb.style.cssText="position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);display:none;z-index:50;padding:16px 26px;border-radius:40px;border:3px solid #d4af37;background:#183028;color:#eef3ef;font-size:20px;font-weight:700;min-height:60px;box-shadow:0 6px 24px #000a";
+document.body.appendChild(mb);
+$("pp").addEventListener("click",()=>{mb.style.display="none"});
+function ask(cb){if(window.cwLeft&&cwLeft()===0){playing=false;stop();window.cwPay&&cwPay();return}
+ if(!AND){hear(cb);return}
+ mb.textContent="🎤 Appuie, puis récite (verset "+A[idx].n+")";mb.style.display="";st("À toi : appuie sur le micro, puis récite.");
+ mb.onclick=()=>{mb.style.display="none";hear(cb)}}
+aud.onended=()=>{
+ if($("m").value!="v"||!playing)return old();
+ ask((s,why,txt)=>{if(!playing)return;if(why=="error"){stop();return}
+  const p=Math.round(Math.max(s,0)*100),ok=s>=gx()&&why!="fast";
+  if(ok){tries=0;verdict(true);const rl=window.cwPass?cwPass():-1;st("✅ "+p+"% - "+LB[gs.value]+" ! Verset suivant"+hd(txt));setTimeout(()=>{if(rl===0){stop();window.cwPay&&cwPay()}else nxt()},2600)}
+  else{verdict(false);tries++;
+   const m=why=="fast"?"Trop rapide : suis la cadence du récitant":why=="silence"?"Rien entendu : rapproche-toi du micro":p+"% (il faut "+Math.round(gx()*100)+"%)";
+   if(tries>=3){tries=0;st("❌ "+m+" - on passe, tu y reviendras."+hd(txt));setTimeout(nxt,2800)}
+   else{st("❌ "+m+" - réécoute et réessaie ("+tries+"/3)"+hd(txt));rep=0;setTimeout(()=>{if(playing)listen()},2800)}}})};
+const b=document.createElement("button");b.textContent="🎤 Tester";b.title="Réciter le verset affiché";
+b.onclick=()=>{if(window.cwLeft&&cwLeft()===0){window.cwPay&&cwPay();return}
+ playing=false;clearTimeout(tm);aud.pause();mb.style.display="none";hear((s,why,txt)=>{if(why=="error")return;
+ const p=Math.round(Math.max(s,0)*100),ok=s>=gx()&&why!="fast";verdict(ok);
+ const rl=ok&&window.cwPass?cwPass():-1;
+ st((ok?"✅ "+LB[gs.value]+" ! "+p+"%":"❌ "+(why=="fast"?"Trop rapide - ":why=="silence"?"Rien entendu - ":"")+p+"%")+hd(txt));
+ if(rl===0)setTimeout(()=>window.cwPay&&cwPay(),1700)})};
+$("bar").appendChild(b);
+st("Validation vocale prête : choisis un verset puis Lecture, ou clique 🎤 Tester.");
+})();
+</script><script>if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(function(){})</script><script>/*LICENSE_V1*/
+(()=>{
+const PUB="BJpsl2Ec8+r+kQuKZI8F9TMWVy3GLvCDgdcpbjwkIlLWR1+zmYncOcqM0xFYIv1cYYQR0bDHVxcLY4RkWoRogVU=",PAY="https://paypal.me/salammarketmoroccoMA",mSel=$("m"),FREE=3;let pro=false;
+const WMSG={fr:"Pour continuer à utiliser le professeur, veuillez acheter la clé d'activation.",ar:"لمواصلة استخدام المعلّم، يُرجى شراء مفتاح التفعيل.",en:"To keep using the teacher, please buy the activation key."};
+let used=Math.max(0,parseInt(localStorage.getItem("cwfree")||"0",10)||0);
+const left=()=>pro?-1:Math.max(0,FREE-used);
+window.cwLeft=left;
+window.cwPass=()=>{if(pro)return -1;used=Math.min(FREE,used+1);localStorage.setItem("cwfree",String(used));return FREE-used};
+const u8=s=>Uint8Array.from(atob(s.replace(/-/g,"+").replace(/_/g,"/")+"=".repeat((4-s.length%4)%4)),c=>c.charCodeAt(0));
+async function valid(c){try{const p=(c||"").trim().split(".");if(p.length!=2||!p[0]||!p[1])return false;
+ const k=await crypto.subtle.importKey("raw",u8(PUB),{name:"ECDSA",namedCurve:"P-256"},false,["verify"]);
+ return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},k,u8(p[1]),new TextEncoder().encode(p[0]))}catch(e){return false}}
+const ov=document.createElement("div");
+ov.style.cssText="position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;z-index:99;padding:16px";
+ov.innerHTML='<div style="background:#183028;border:2px solid #d4af37;border-radius:14px;padding:18px;max-width:420px;width:100%"><h3 style="margin:0 0 8px;color:#d4af37">🔒 Fonction complète</h3><p id="lw" style="display:none;font-size:14px;font-weight:700;color:#f0c36a;line-height:1.5;margin:0 0 10px"></p><p style="font-size:14px;margin:0 0 10px">La validation vocale fait partie de la version complète : <b>5 € à vie</b>. Après le paiement, tu reçois un code par e-mail.</p><textarea id="lc" rows="3" placeholder="Colle ton code d\'activation ici" style="width:100%;box-sizing:border-box;background:#0f1b17;color:#eef3ef;border:1px solid #2f5a4b;border-radius:6px;padding:6px"></textarea><div id="lm" style="min-height:20px;font-size:13px;margin:6px 0"></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button id="la">Activer</button>'+(PAY!="#"?'<a href="'+PAY+'" target="_blank" rel="noopener" style="color:#d4af37;align-self:center">Acheter (5 €)</a>':"")+'<button id="lx" style="margin-left:auto">Fermer</button></div></div>';
+document.body.appendChild(ov);
+const msg=t=>ov.querySelector("#lm").textContent=t;
+function modal(trial){const w=ov.querySelector("#lw");
+ if(trial){const l=(localStorage.getItem("cwl")||"fr");w.textContent=WMSG[l]||WMSG.fr;w.style.display=""}
+ else w.style.display="none";
+ msg("");ov.style.display="flex"}
+window.cwPay=()=>modal(true);
+ov.querySelector("#lx").onclick=()=>ov.style.display="none";
+ov.querySelector("#la").onclick=async()=>{const c=ov.querySelector("#lc").value.trim();
+ if(await valid(c)){localStorage.setItem("cwlic",c);pro=true;badge();msg("✅ Version complète activée. Merci !");setTimeout(()=>ov.style.display="none",1400)}
+ else msg("❌ Code invalide : vérifie que tu as copié tout le code.")};
+const lb=document.createElement("button");$("bar").appendChild(lb);
+function badge(){lb.textContent=pro?"✔ Complet":"🔓 Activer";lb.onclick=pro?null:()=>modal(false)}
+mSel.addEventListener("change",()=>{if(mSel.value=="v"&&!pro&&left()===0){mSel.value="t";sv();modal(true)}});
+badge();
+valid(localStorage.getItem("cwlic")).then(ok=>{pro=ok;badge();if(!pro&&mSel.value=="v"&&left()===0){mSel.value="t";sv()}});
+})();
+</script><script>/*INSTALL_V1*/
+(()=>{let dp=null;const std=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+const b=document.createElement("button");b.textContent="📲 Installer";b.style.display="none";$("bar").appendChild(b);
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e;if(!std)b.style.display=""});
+window.addEventListener("appinstalled",()=>{b.style.display="none"});
+b.onclick=async()=>{if(dp){dp.prompt();await dp.userChoice;dp=null;b.style.display="none"}};
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!std){b.style.display="";b.onclick=()=>alert("Sur iPhone : touche le bouton Partager (carré avec une flèche), puis « Sur l'écran d'accueil ».")}
+})();
+</script><script>/*MENU_V1*/
+(()=>{
+const WA="212727850193",FB="https://web.facebook.com/groups/1667164501438176/",WEB="https://salam-market-morocco.netlify.app/",PP="https://paypal.me/salammarketmoroccoMA",BC="https://buy.stripe.com/bJe4gzgQy98LgWG0NO77O00";
+const bar=$("bar");
+const tj=document.createElement("button");tj.textContent="📚 Tajweed";tj.onclick=()=>{location.href="tajweed.html"};bar.appendChild(tj);
+const ct=document.createElement("button");ct.textContent="💬 Contact";bar.appendChild(ct);
+const ov=document.createElement("div");
+ov.style.cssText="position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;z-index:98;padding:16px";
+const a=(h,t)=>'<a href="'+h+'" target="_blank" rel="noopener" style="display:block;text-align:center;padding:12px;margin:8px 0;border-radius:10px;border:2px solid #d4af37;color:#eef3ef;text-decoration:none;font-weight:700">'+t+'</a>';
+ov.innerHTML='<div style="background:#183028;border:2px solid #d4af37;border-radius:14px;padding:16px;max-width:420px;width:100%;max-height:90vh;overflow:auto"><h3 style="margin:0 0 6px;color:#d4af37">Nous contacter</h3>'+a("https://wa.me/"+WA+"?text="+encodeURIComponent("Salam, j'ai une question sur Coran Professeur."),"💬 WhatsApp")+a(FB,"👥 Groupe Facebook")+a(WEB,"🌐 Salam Market Morocco")+'<h3 style="margin:14px 0 6px;color:#d4af37">Version complète - 5 €</h3><p style="font-size:13px;margin:0 0 4px">Après le paiement, envoie-nous l\'e-mail utilisé pour recevoir ton code d\'activation.</p>'+(BC?a(BC,"💳 Payer par carte ou Bancontact"):"")+(PP&&PP!="#"?a(PP,"💳 Payer avec PayPal"):"")+'<button id="mx" style="width:100%;margin-top:8px">Fermer</button></div>';
+document.body.appendChild(ov);
+ct.onclick=()=>ov.style.display="flex";ov.querySelector("#mx").onclick=()=>ov.style.display="none";
+ov.onclick=e=>{if(e.target===ov)ov.style.display="none"};
+})();
+</script><script>/*ERGO_V3*/
+(()=>{
+if(Math.min(screen.width,screen.height)>700)return;
+const bar=$("bar"),tp=$("top"),list=$("list"),pp=$("pp");
+document.body.classList.add("phone");
+function gearPath(){const p=[],n=8,ro=10.5,ri=8,w=0.18;
+ for(let i=0;i<n;i++){const a=i*2*Math.PI/n;[[a-w*1.6,ri],[a-w,ro],[a+w,ro],[a+w*1.6,ri]].forEach(([t,r])=>p.push((12+r*Math.cos(t)).toFixed(2)+" "+(12+r*Math.sin(t)).toFixed(2)))}
+ return "M"+p.join("L")+"Z M12 8.6a3.4 3.4 0 1 0 0 6.8a3.4 3.4 0 1 0 0-6.8z"}
+const svg=p=>'url("data:image/svg+xml,'+encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'>"+p+"</svg>")+'")';
+const IC={
+ prev:svg("<path d='M6 5h2.2v14H6zM19 5.5v13L9.5 12z'/>"),
+ next:svg("<path d='M15.8 5H18v14h-2.2zM5 5.5v13L14.5 12z'/>"),
+ play:svg("<path d='M8 5v14l11-7z'/>"),
+ pause:svg("<path d='M7 5h3.4v14H7zM13.6 5H17v14h-3.4z'/>"),
+ mic:svg("<rect x='9' y='3' width='6' height='11' rx='3'/><path d='M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7' fill='none' stroke='#000' stroke-width='1.8' stroke-linecap='round'/>"),
+ gear:svg("<path fill-rule='evenodd' d='"+gearPath()+"'/>")};
+const css=document.createElement("style");
+css.textContent=`body.phone{height:100vh;height:100dvh}
+body.phone #top{display:flex;gap:8px;padding:8px 10px;background:#183028}
+body.phone #top select{flex:1;min-width:0;min-height:48px;font-size:16px;font-weight:700;background:#183028;border:2px solid #2f5a4b;border-radius:12px;color:#eef3ef;padding:0 10px}
+body.phone #top #vs{flex:0 0 96px}
+body.phone #st{padding:4px 12px;font-size:14px;line-height:1.3;max-height:2.8em;overflow:hidden}
+body.phone #list{padding:8px 10px}
+body.phone .a{position:relative;padding:12px 14px;margin-bottom:8px;border-radius:14px}
+body.phone .ar{text-indent:46px;line-height:2}
+body.phone .n{position:absolute;top:12px;right:14px;width:30px;height:30px;line-height:27px;padding:0;margin:0;text-align:center;text-indent:0;font-size:14px;box-sizing:border-box;border:1.5px solid #d4af37;border-radius:50%;color:#d4af37}
+body.phone .fr{margin-top:6px;font-size:14px;color:#aab9b2;line-height:1.45}
+body.phone #dock{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%;box-sizing:border-box;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#0f1b17;border-top:1px solid #2f5a4b}
+body.phone #dock button{display:flex;align-items:center;justify-content:center;gap:8px;font-size:0;min-width:0;min-height:54px;padding:0;border-radius:14px;background:#183028;border:2px solid #2f5a4b;color:#eef3ef;white-space:nowrap;overflow:hidden}
+body.phone #dock button::before{content:"";flex:0 0 auto;width:24px;height:24px;background:#eef3ef;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+body.phone #dock #pp::before{width:28px;height:28px}
+body.phone #dock #pp.on{border-color:#d4af37;background:#1f4034}
+.micfab{display:flex;align-items:center;gap:10px}
+.micfab::before{content:"";width:22px;height:22px;background:#eef3ef;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+#sheet{position:fixed;inset:0;z-index:97;display:none}
+#sheet .bk{position:absolute;inset:0;background:#000b}
+#sheet .pn{position:absolute;left:0;right:0;bottom:0;max-height:84vh;max-height:84dvh;overflow:auto;background:#122620;border-top:3px solid #d4af37;border-radius:22px 22px 0 0;padding:0 16px calc(18px + env(safe-area-inset-bottom))}
+#sheet .sh{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#122620;padding:14px 0 8px;z-index:1}
+#sheet .sh b{color:#d4af37;font-size:20px}
+#sheet .sh button{background:none;border:0;font-size:22px;min-height:44px;min-width:44px;color:#eef3ef}
+#sheet .lb{font-size:13px;color:#aab9b2;margin:12px 0 4px}
+#sheet select,#sheet input[type=number]{width:100%;box-sizing:border-box;min-height:48px;background:#183028;border:2px solid #2f5a4b;border-radius:12px;color:#eef3ef;font-size:16px;font-weight:700;padding:0 12px}
+#sheet .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#sheet .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+#sheet label.chip{display:flex;align-items:center;justify-content:center;gap:6px;min-height:48px;padding:0 6px;border:2px solid #2f5a4b;border-radius:12px;background:#183028;font-size:14px;font-weight:700}
+#sheet label.chip:has(input:checked){border-color:#d4af37;background:#1f4034}
+#sheet input[type=checkbox]{width:20px;height:20px;min-height:0;accent-color:#d4af37}
+#sheet input[type=range]{width:100%;min-height:0;accent-color:#d4af37}
+#sheet .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+#sheet .g2 button{min-height:48px;background:#183028;border:2px solid #2f5a4b;border-radius:12px;color:#eef3ef;font-weight:700;font-size:15px}
+#sheet .note{font-size:12px;color:#aab9b2;line-height:1.4;margin-top:4px}
+#sheet #lg{margin-top:16px;padding:10px 0 0;border-top:1px solid #2f5a4b;font-size:12px}`;
+document.head.appendChild(css);
+
+const vs=document.createElement("select");vs.id="vs";tp.appendChild(vs);
+const r=$("r");if(r&&r.parentNode)r.parentNode.removeChild(r);
+const btns=[...bar.querySelectorAll("button")],byT=t=>btns.find(b=>b.textContent.includes(t));
+const tester=byT("Tester"),bC=byT("Complet")||byT("Activer"),bI=byT("Installer"),bT=byT("Tajweed"),bK=byT("Contact");
+const gsel=[...bar.querySelectorAll("select")].find(s=>[...s.options].some(o=>o.value=="f"));
+
+const dock=document.createElement("div");dock.id="dock";
+const pv=$("pv"),nx=$("nx");
+pv.style.setProperty("--ic",IC.prev);pv.setAttribute("aria-label","Verset précédent");
+nx.style.setProperty("--ic",IC.next);nx.setAttribute("aria-label","Verset suivant");
+dock.append(pv,pp,nx);
+if(tester){tester.textContent="";tester.style.setProperty("--ic",IC.mic);tester.setAttribute("aria-label","Tester ma récitation");dock.append(tester)}
+const gear=document.createElement("button");gear.style.setProperty("--ic",IC.gear);gear.setAttribute("aria-label","Réglages");dock.append(gear);
+document.body.appendChild(dock);
+const setPP=()=>{const t=pp.textContent||"";const paused=/Lecture/.test(t)&&!/Pause/.test(t);
+ pp.style.setProperty("--ic",paused?IC.play:IC.pause);pp.classList.toggle("on",!paused);pp.setAttribute("aria-label",paused?"Lecture":"Pause")};
+new MutationObserver(setPP).observe(pp,{childList:true,characterData:true,subtree:true});setPP();
+
+const sheet=document.createElement("div");sheet.id="sheet";
+sheet.innerHTML='<div class="bk"></div><div class="pn"><div class="sh"><b>Réglages</b><button id="sx">✕</button></div><div id="sb"></div></div>';
+document.body.appendChild(sheet);
+const sb=sheet.querySelector("#sb");
+const L=t=>{const x=document.createElement("div");x.className="lb";x.textContent=t;return x};
+const mk=c=>{const x=document.createElement("div");x.className=c;return x};
+if(r)sb.append(L("Récitant (ton professeur)"),r);
+sb.append(L("Mode"),$("m"));
+$("rp").style.width="100%";$("fs").style.width="100%";
+const r2=mk("row2"),ca=document.createElement("div"),cb=document.createElement("div");
+ca.append(L("Répétitions"),$("rp"));cb.append(L("Vitesse"),$("sp"));r2.append(ca,cb);sb.append(r2);
+const r3=mk("row3");["tj","tr","hd"].forEach(i=>{const lb=$(i).closest("label");lb.classList.add("chip");r3.append(lb)});sb.append(r3);
+sb.append(L("Taille du texte"),$("fs"));
+const ex=document.createElement("div");
+const exv=Math.round(parseFloat(localStorage.getItem("cwx")||"0.7")*100);
+ex.innerHTML='<div class="lb">Exigence de la validation vocale : <b id="exl" style="color:#d4af37">'+exv+' %</b></div><input id="exr" type="range" min="50" max="100" step="5" value="'+exv+'"><div class="note">Plus c\'est haut, plus il faut réciter des mots exacts. Le moteur vérifie les mots, pas les règles de tajweed.</div>';
+sb.append(ex);
+ex.querySelector("#exr").oninput=e=>{const v=+e.target.value;localStorage.setItem("cwx",String(v/100));ex.querySelector("#exl").textContent=v+" %"};
+if(gsel)sb.append(L("Réponse vocale"),gsel);
+const g2=mk("g2");[bC,bI,bT,bK].filter(Boolean).forEach(x=>g2.append(x));sb.append(g2);
+const lg=$("lg");if(lg)sb.append(lg);
+bar.style.display="none";
+
+const openSheet=()=>{sheet.style.display="block"},closeSheet=()=>{sheet.style.display="none"};
+gear.onclick=openSheet;sheet.querySelector(".bk").onclick=closeSheet;sheet.querySelector("#sx").onclick=closeSheet;
+
+const items=()=>[...document.querySelectorAll("#list .a")];
+function syncV(){const it=items();
+ if(vs.options.length!=it.length){vs.innerHTML="";it.forEach((_,i)=>vs.add(new Option("v. "+(i+1),i+1)))}
+ const i=it.findIndex(e=>e.classList.contains("on"));if(i>=0&&vs.value!=String(i+1))vs.value=String(i+1)}
+new MutationObserver(syncV).observe(list,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]});
+vs.onchange=()=>{const i=vs.value-1;if(playing)go(i);else{idx=i;mark(i)}};
+syncV();
+
+const mb=[...document.body.children].find(e=>e.tagName=="BUTTON"&&e.style.position=="fixed");
+if(mb){mb.classList.add("micfab");mb.style.setProperty("--ic",IC.mic);mb.style.bottom="calc(84px + env(safe-area-inset-bottom))";
+ const fix=()=>{const t=mb.textContent;if(/^🎤/.test(t))mb.textContent=t.replace(/^🎤\s*/,"")};
+ new MutationObserver(fix).observe(mb,{childList:true,characterData:true,subtree:true});fix()}
+
+let wl=null;
+async function wake(){try{if(playing&&navigator.wakeLock&&!wl){wl=await navigator.wakeLock.request("screen");wl.addEventListener("release",()=>{wl=null})}else if(!playing&&wl){await wl.release();wl=null}}catch(e){}}
+pp.addEventListener("click",()=>setTimeout(wake,80));
+})();
+</script><script>/*AUDIOFB_V1*/
+(()=>{
+const r=$("r"),FB=["Maher_AlMuaiqly_128kbps","Abdurrahmaan_As-Sudais_192kbps","Saood_ash-Shuraym_128kbps","Husary_128kbps"];
+const aw=document.createElement("div");aw.style.cssText="padding:2px 12px;font-size:13px;color:#ff9d6b;display:none";$("st").after(aw);
+const nm=v=>{const o=[...r.options].find(o=>o.value==v);return o?o.text:v};
+const url=rec=>"https://everyayah.com/data/"+rec+"/"+P(N)+P(A[idx].n)+".mp3";
+let tried=new Set(),orig="";
+aud.addEventListener("error",()=>{
+ if(!A||!A[idx])return;
+ const cur=r.value;
+ if(aud.src===url(cur)){tried=new Set();orig=cur}
+ const nx=FB.find(v=>v!=orig&&!tried.has(v));
+ if(!nx){aw.textContent="⚠ Audio indisponible pour ce verset.";aw.style.display="block";return}
+ tried.add(nx);
+ aud.src=url(nx);aud.playbackRate=+$("sp").value;aud.play().catch(()=>{});
+ setTimeout(()=>{st("Écoute - verset "+A[idx].n+" (récitant de secours)");aw.textContent="⚠ "+nm(orig)+" n'a pas ce verset : lu par "+nm(nx)+" (style proche).";aw.style.display="block"},120)});
+aud.addEventListener("playing",()=>{if(aud.src===url(r.value))aw.style.display="none"});
+})();
+</script>
+<script>/*I18N_V1*/
+(()=>{
+const LANGS=["fr","ar","en"],CODE={fr:"FR",ar:"ع",en:"EN"},
+ LBL={fr:"Langue : français. Appuie pour changer.",ar:"اللغة: العربية. اضغط للتغيير.",en:"Language: English. Tap to change."},
+ ED={fr:"fr.hamidullah",en:"en.sahih",ar:"ar.muyassar"},
+ WA={fr:"Salam, j'ai une question sur Coran Professeur.",ar:"السلام عليكم، لدي سؤال حول تطبيق «القرآن - المعلّم».",en:"Salam, I have a question about Quran Teacher."};
+let lang=localStorage.getItem("cwl");if(!LANGS.includes(lang))lang="fr";
+const T={
+ar:{
+"Coran - Professeur":"القرآن – المعلّم",
+"Choisis un récitant et une sourate, puis Lecture.":"اختر قارئًا وسورة، ثم اضغط تشغيل.",
+"Validation vocale prête : choisis un verset puis Lecture, ou clique 🎤 Tester.":"التحقّق الصوتي جاهز: اختر آية ثم اضغط تشغيل، أو اضغط 🎤 للتجربة.",
+"Chargement...":"جارٍ التحميل…",
+"Sourate terminée. Qu'Allah accepte.":"انتهت السورة. تقبّل الله منك.",
+"Écoute en cours...":"جارٍ الاستماع…",
+"Reconnaissance vocale indisponible ici.":"التعرّف على الصوت غير متاح هنا.",
+"Brave gère mal la reconnaissance vocale : ouvre ce site dans Chrome.":"Brave لا يدعم التعرّف على الصوت جيدًا: افتح هذا الموقع في Chrome.",
+"À toi : appuie sur le micro, puis récite.":"دورك: اضغط على الميكروفون ثم اقرأ.",
+"Réciter le verset affiché":"اقرأ الآية المعروضة",
+"⚠ Audio indisponible pour ce verset.":"⚠ الصوت غير متاح لهذه الآية.",
+"Sur iPhone : touche le bouton Partager (carré avec une flèche), puis « Sur l'écran d'accueil ».":"على iPhone: اضغط زر المشاركة (المربّع مع السهم) ثم «إضافة إلى الشاشة الرئيسية».",
+"Répét.":"تكرار",
+"Vitesse":"السرعة",
+"Tajweed":"التجويد",
+"Traduction":"التفسير",
+"Masquer":"إخفاء",
+"Taille":"الحجم",
+"Taille du texte":"حجم الخط",
+"Professeur (écoute puis répète)":"المعلّم (استمع ثم كرّر)",
+"Écoute continue":"استماع متواصل",
+"Validation vocale (je récite, l'app corrige)":"تحقّق صوتي (أقرأ والتطبيق يصحّح)",
+"▶ Lecture":"▶ تشغيل",
+"⏸ Pause":"⏸ إيقاف",
+"🎤 Tester":"🎤 تجربة",
+"📲 Installer":"📲 تثبيت",
+"📚 Tajweed":"📚 التجويد",
+"💬 Contact":"💬 تواصل",
+"💬 WhatsApp":"💬 واتساب",
+"👥 Groupe Facebook":"👥 مجموعة فيسبوك",
+"Tajweed :":"التجويد: ",
+"madd obligatoire":"مدّ لازم",
+"madd normal":"مدّ طبيعي",
+"qalqala":"قلقلة",
+"ikhfa":"إخفاء",
+"iqlab":"إقلاب",
+"idgham":"إدغام",
+"ghunna":"غنّة",
+"lettre muette":"حرف صامت",
+"🔒 Fonction complète":"🔒 النسخة الكاملة",
+"La validation vocale fait partie de la version complète :":"التحقّق الصوتي جزء من النسخة الكاملة: ",
+"5 € à vie":"5 € مدى الحياة",
+". Après le paiement, tu reçois un code par e-mail.":". بعد الدفع يصلك رمز التفعيل بالبريد الإلكتروني.",
+"Colle ton code d'activation ici":"الصق رمز التفعيل هنا",
+"Activer":"تفعيل",
+"Acheter (5 €)":"شراء (5 €)",
+"Fermer":"إغلاق",
+"✔ Complet":"✔ مكتمل",
+"🔓 Activer":"🔓 تفعيل",
+"✅ Version complète activée. Merci !":"✅ تم تفعيل النسخة الكاملة. شكرًا لك!",
+"❌ Code invalide : vérifie que tu as copié tout le code.":"❌ رمز غير صالح: تأكّد من نسخه كاملًا.",
+"Nous contacter":"تواصل معنا",
+"Version complète - 5 €":"النسخة الكاملة - 5 €",
+"Après le paiement, envoie-nous l'e-mail utilisé pour recevoir ton code d'activation.":"بعد الدفع أرسل إلينا البريد الإلكتروني الذي استُخدم لاستلام رمز التفعيل.",
+"💳 Payer avec PayPal":"💳 الدفع عبر PayPal",
+"💳 Payer par carte ou Bancontact":"🏦 الدفع عبر Bancontact (بلجيكا)",
+"Réglages":"الإعدادات",
+"Récitant (ton professeur)":"القارئ (معلّمك)",
+"Mode":"الوضع",
+"Répétitions":"عدد التكرارات",
+"Exigence de la validation vocale :":"صرامة التحقّق الصوتي: ",
+"Plus c'est haut, plus il faut réciter des mots exacts. Le moteur vérifie les mots, pas les règles de tajweed.":"كلّما زادت النسبة وجب نطق كلمات أدقّ. المحرّك يتحقّق من الكلمات لا من أحكام التجويد.",
+"Réponse vocale":"صيغة الثناء",
+"Verset précédent":"الآية السابقة",
+"Verset suivant":"الآية التالية",
+"Tester ma récitation":"اختبر تلاوتي",
+"Lecture":"تشغيل",
+"Pause":"إيقاف",
+"Frère : أحسنتَ":"أخ: أحسنتَ",
+"Sœur : أحسنتِ":"أخت: أحسنتِ",
+"Neutre : أحسنت":"محايد: أحسنت"
+},
+en:{
+"Coran - Professeur":"Quran - Teacher",
+"Choisis un récitant et une sourate, puis Lecture.":"Pick a reciter and a surah, then press Play.",
+"Validation vocale prête : choisis un verset puis Lecture, ou clique 🎤 Tester.":"Voice check ready: pick a verse then Play, or tap 🎤 to test.",
+"Chargement...":"Loading…",
+"Sourate terminée. Qu'Allah accepte.":"Surah finished. May Allah accept it.",
+"Écoute en cours...":"Listening…",
+"Reconnaissance vocale indisponible ici.":"Speech recognition is unavailable here.",
+"Brave gère mal la reconnaissance vocale : ouvre ce site dans Chrome.":"Brave handles speech recognition poorly: open this site in Chrome.",
+"À toi : appuie sur le micro, puis récite.":"Your turn: tap the mic, then recite.",
+"Réciter le verset affiché":"Recite the displayed verse",
+"⚠ Audio indisponible pour ce verset.":"⚠ Audio unavailable for this verse.",
+"Sur iPhone : touche le bouton Partager (carré avec une flèche), puis « Sur l'écran d'accueil ».":"On iPhone: tap Share (square with an arrow), then “Add to Home Screen”.",
+"Répét.":"Repeat",
+"Vitesse":"Speed",
+"Tajweed":"Tajweed",
+"Traduction":"Translation",
+"Masquer":"Blur",
+"Taille":"Size",
+"Taille du texte":"Text size",
+"Professeur (écoute puis répète)":"Teacher (listen, then repeat)",
+"Écoute continue":"Continuous listening",
+"Validation vocale (je récite, l'app corrige)":"Voice check (I recite, the app corrects)",
+"▶ Lecture":"▶ Play",
+"⏸ Pause":"⏸ Pause",
+"🎤 Tester":"🎤 Test",
+"📲 Installer":"📲 Install",
+"📚 Tajweed":"📚 Tajweed",
+"💬 Contact":"💬 Contact",
+"💬 WhatsApp":"💬 WhatsApp",
+"👥 Groupe Facebook":"👥 Facebook group",
+"Tajweed :":"Tajweed: ",
+"madd obligatoire":"compulsory madd",
+"madd normal":"natural madd",
+"qalqala":"qalqala",
+"ikhfa":"ikhfa",
+"iqlab":"iqlab",
+"idgham":"idgham",
+"ghunna":"ghunna",
+"lettre muette":"silent letter",
+"🔒 Fonction complète":"🔒 Full version",
+"La validation vocale fait partie de la version complète :":"Voice checking is part of the full version: ",
+"5 € à vie":"€5 once, for life",
+". Après le paiement, tu reçois un code par e-mail.":". After payment you get an activation code by e-mail.",
+"Colle ton code d'activation ici":"Paste your activation code here",
+"Activer":"Activate",
+"Acheter (5 €)":"Buy (€5)",
+"Fermer":"Close",
+"✔ Complet":"✔ Full",
+"🔓 Activer":"🔓 Unlock",
+"✅ Version complète activée. Merci !":"✅ Full version activated. Thank you!",
+"❌ Code invalide : vérifie que tu as copié tout le code.":"❌ Invalid code: check that you copied all of it.",
+"Nous contacter":"Contact us",
+"Version complète - 5 €":"Full version - €5",
+"Après le paiement, envoie-nous l'e-mail utilisé pour recevoir ton code d'activation.":"After paying, send us the e-mail address used to receive your activation code.",
+"💳 Payer avec PayPal":"💳 Pay with PayPal",
+"💳 Payer par carte ou Bancontact":"🏦 Pay with Bancontact (Belgium)",
+"Réglages":"Settings",
+"Récitant (ton professeur)":"Reciter (your teacher)",
+"Mode":"Mode",
+"Répétitions":"Repeats",
+"Exigence de la validation vocale :":"Voice-check strictness: ",
+"Plus c'est haut, plus il faut réciter des mots exacts. Le moteur vérifie les mots, pas les règles de tajweed.":"The higher it is, the more words must match exactly. The engine checks words, not tajweed rules.",
+"Réponse vocale":"Spoken reply",
+"Verset précédent":"Previous verse",
+"Verset suivant":"Next verse",
+"Tester ma récitation":"Test my recitation",
+"Lecture":"Play",
+"Pause":"Pause",
+"Frère : أحسنتَ":"Brother: أحسنتَ",
+"Sœur : أحسنتِ":"Sister: أحسنتِ",
+"Neutre : أحسنت":"Neutral: أحسنت"
+}};
+const R={
+ar:[
+[/^Écoute - verset /,"استماع — الآية "],
+[/^À vous de répéter le verset /,"دورك: كرّر الآية "],
+[/^🎤 À vous : récitez le verset /,"🎤 دورك: اقرأ الآية "],
+[/^🎤 Appuie, puis récite \(verset /,"🎤 اضغط ثم اقرأ (الآية "],
+[/^(\d+) versets?\. Prêt\.$/,"عدد الآيات: $1 — جاهز."],
+[/^Audio indisponible : /,"الصوت غير متاح: "],
+[/^Erreur réseau : /,"خطأ في الشبكة: "],
+[/^⚠ Micro : /,"⚠ الميكروفون: "],
+[/ - autorise le micro \(cadenas du navigateur\)\./," — اسمح بالميكروفون (أيقونة القفل في المتصفح)."],
+[/ Utilise Chrome\./," استخدم Chrome."],
+[/ ! Verset suivant/," ! الآية التالية"],
+[/ - on passe, tu y reviendras\./," — ننتقل إليها لاحقًا."],
+[/ - réécoute et réessaie \(/," — أعد الاستماع وحاول ("],
+[/ \| entendu : /," | سُمع: "],
+[/Trop rapide : suis la cadence du récitant/,"سريع جدًا: اتبع إيقاع القارئ"],
+[/Rien entendu : rapproche-toi du micro/,"لم يُسمع شيء: اقترب من الميكروفون"],
+[/\(il faut (\d+)%\)/,"(المطلوب $1%)"],
+[/ \(récitant de secours\)/," (قارئ بديل)"],
+[/^(.+?) n'a pas ce verset : lu par (.+?) \(style proche\)\.$/,"«$1» لا يملك هذه الآية: قرأها «$2» بأسلوب قريب."],
+[/^v\. (\d+)$/,"آ$1"],
+[/\(enseignement\)/,"(للتعليم)"],
+[/^(\d+)\. (.*) - (.*)$/,"$1. $3"]
+],
+en:[
+[/^Écoute - verset /,"Listening - verse "],
+[/^À vous de répéter le verset /,"Your turn: repeat verse "],
+[/^🎤 À vous : récitez le verset /,"🎤 Your turn: recite verse "],
+[/^🎤 Appuie, puis récite \(verset /,"🎤 Tap, then recite (verse "],
+[/^(\d+) versets?\. Prêt\.$/,"$1 verses. Ready."],
+[/^Audio indisponible : /,"Audio unavailable: "],
+[/^Erreur réseau : /,"Network error: "],
+[/^⚠ Micro : /,"⚠ Mic: "],
+[/ - autorise le micro \(cadenas du navigateur\)\./," — allow the microphone (padlock in the browser)."],
+[/ Utilise Chrome\./," Use Chrome."],
+[/ ! Verset suivant/," ! Next verse"],
+[/ - on passe, tu y reviendras\./," — moving on, you'll come back to it."],
+[/ - réécoute et réessaie \(/," — listen again and retry ("],
+[/ \| entendu : /," | heard: "],
+[/Trop rapide : suis la cadence du récitant/,"Too fast: follow the reciter's pace"],
+[/Rien entendu : rapproche-toi du micro/,"Nothing heard: move closer to the mic"],
+[/\(il faut (\d+)%\)/,"(needs $1%)"],
+[/ \(récitant de secours\)/," (backup reciter)"],
+[/^(.+?) n'a pas ce verset : lu par (.+?) \(style proche\)\.$/,"$1 has no audio for this verse: read by $2 (similar style)."],
+[/\(enseignement\)/,"(teaching)"],
+
+]};
+
+const RN={"Husary_Muallim_128kbps":"الحصري — المعلّم","Husary_128kbps":"الحصري — مرتّل","Minshawy_Murattal":"المنشاوي — مرتّل","Minshawy_Mujawwad":"المنشاوي — مجوّد","Abdul_Basit_Murattal":"عبد الباسط — مرتّل","Abdul_Basit_Mujawwad":"عبد الباسط — مجوّد","Alafasy":"مشاري العفاسي","Ali_Jaber":"علي جابر","Abdurrahmaan_As-Sudais_192kbps":"عبد الرحمن السديس","Saood_ash-Shuraym_128kbps":"سعود الشريم","Maher_AlMuaiqly_128kbps":"ماهر المعيقلي","Abu_Bakr_Ash-Shaatree_128kbps":"أبو بكر الشاطري","Hudhaify_128kbps":"علي الحذيفي","Ghamadi_40kbps":"سعد الغامدي","Ahmed_ibn_Ali_al-Ajamy_128kbps":"أحمد العجمي","Muhammad_Ayyoub_128kbps":"محمد أيوب","Nasser_Alqatami_128kbps":"ناصر القطامي","Yasser_Ad-Dussary_128kbps":"ياسر الدوسري"};
+function reciters(){
+ const r=document.getElementById("r");if(!r)return;
+ [...r.options].forEach(o=>{
+  if(o.dataset.fr===undefined)o.dataset.fr=o.textContent;
+  const t=lang==="ar"?RN[o.value]:null;
+  const want=t||o.dataset.fr;
+  if(o.textContent!==want)o.textContent=want})}
+const of=window.fetch.bind(window);
+window.fetch=(u,o)=>{
+ if(typeof u==="string"&&u.indexOf("/editions/quran-tajweed,")>=0)u=u.replace(/quran-tajweed,[^,]+/,"quran-tajweed,"+ED[lang]);
+ return of(u,o)};
+const oa=window.alert.bind(window);
+window.alert=m=>{const t=tr(String(m));oa(t||m)};
+
+function tr(fr){
+ if(!fr)return null;
+ const k=String(fr).replace(/\s+/g," ").trim();
+ if(!k)return null;
+ const d=T[lang];if(!d)return null;
+ if(d[k])return d[k];
+ let s=k,hit=false;
+ for(const r of R[lang]){const n=s.replace(r[0],r[1]);if(n!==s){s=n;hit=true}}
+ return hit?s:null}
+
+function setN(n){
+ if(lang==="fr")return;
+ const p=n.parentNode;if(!p||p.nodeType!==1)return;
+ const tg=p.tagName;
+ if(tg==="SCRIPT"||tg==="STYLE"||tg==="TEXTAREA")return;
+ if(document.body&&document.body.classList.contains("phone")&&p.closest&&p.closest("#pp"))return;
+ if(p.closest&&p.closest(".ar,.bsm"))return;
+ const cur=n.nodeValue;
+ const fr=(n.__out!==undefined&&n.__out===cur)?n.__fr:cur;
+ const out=tr(fr);
+ if(out==null)return;
+ n.__fr=fr;n.__out=out;
+ if(cur!==out)n.nodeValue=out}
+
+function walk(root){
+ if(!root)return;
+ if(root.nodeType===3){setN(root);return}
+ if(root.nodeType!==1&&root.nodeType!==9)return;
+ const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);let n;
+ while((n=tw.nextNode()))setN(n)}
+
+function restore(){
+ const tw=document.createTreeWalker(document.documentElement,NodeFilter.SHOW_TEXT,null);let n;
+ while((n=tw.nextNode())){if(n.__fr!==undefined){if(n.nodeValue!==n.__fr)n.nodeValue=n.__fr;delete n.__out;delete n.__fr}}}
+
+const ATTR=["aria-label","title","placeholder"],AM=new WeakMap();
+function attrs(root){
+ (root||document).querySelectorAll("[aria-label],[title],[placeholder]").forEach(el=>{
+  let m=AM.get(el);if(!m){m={};AM.set(el,m)}
+  for(const a of ATTR){
+   const v=el.getAttribute(a);if(v==null)continue;
+   let rec=m[a];
+   if(!rec||rec.out!==v)rec={fr:v,out:v};
+   const out=tr(rec.fr);
+   rec.out=out||rec.fr;m[a]=rec;
+   if(el.getAttribute(a)!==rec.out)el.setAttribute(a,rec.out)}})}
+
+function apply(reload){
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ if(document.body)document.body.classList.toggle("lang-ar",lang==="ar");
+ restore();reciters();walk(document.documentElement);attrs(document.documentElement);
+ const b=document.getElementById("lgbtn");
+ if(b){b.textContent=CODE[lang];b.setAttribute("aria-label",LBL[lang]);b.title=LBL[lang]}
+ const a=document.querySelector('a[href*="wa.me"]');
+ if(a&&a.href.indexOf("text=")>=0){try{const u=new URL(a.href);u.searchParams.set("text",WA[lang]);a.href=u.href}catch(e){}}
+ if(reload&&typeof load==="function"&&typeof A!=="undefined"&&A.length)load(idx)}
+
+const css=document.createElement("style");
+css.textContent="#top{grid-template-columns:auto 1fr 1fr}"+
+"#lgbtn{min-width:58px;padding:0 10px;border:2px solid #2f5a4b;border-radius:10px;background:#183028;color:var(--g);font-weight:800;font-size:14px;letter-spacing:.5px}"+
+"#lgbtn:hover,#lgbtn:focus-visible{border-color:var(--g);outline:none}"+
+"body.phone #top #lgbtn{flex:0 0 auto;min-width:52px;min-height:48px;padding:0 8px;border-radius:12px;font-size:15px}"+
+"html[dir=rtl] #st{text-align:right}"+
+"body.lang-ar #bar,body.lang-ar #dock{direction:ltr}"+
+"body.lang-ar .fr{font-family:Amiri,'Traditional Arabic',serif;direction:rtl;text-align:right;font-size:calc(var(--fs,30px)*.55);line-height:1.9}"+
+"body.lang-ar #lg{direction:rtl;text-align:right}";
+document.head.appendChild(css);
+
+const btn=document.createElement("button");
+btn.id="lgbtn";btn.type="button";btn.textContent=CODE[lang];btn.title=LBL[lang];
+btn.onclick=()=>{lang=LANGS[(LANGS.indexOf(lang)+1)%LANGS.length];localStorage.setItem("cwl",lang);apply(true)};
+const tp=document.getElementById("top");if(tp)tp.prepend(btn);
+
+apply(false);
+
+const mo=new MutationObserver(recs=>{
+ if(lang==="fr")return;
+ for(const r of recs){
+  if(r.type==="characterData")setN(r.target);
+  else if(r.addedNodes)r.addedNodes.forEach(n=>{if(n.nodeType===3)setN(n);else if(n.nodeType===1)walk(n)})}});
+mo.observe(document.documentElement,{childList:true,subtree:true,characterData:true});
+const ppEl=document.getElementById("pp");
+if(ppEl){const mo2=new MutationObserver(()=>{
+ const v=ppEl.getAttribute("aria-label");const out=tr(v);
+ if(out&&out!==v)ppEl.setAttribute("aria-label",out)});
+ mo2.observe(ppEl,{attributes:true,attributeFilter:["aria-label"]})}
+})();
+</script>
+<script>/*RESTORE_V1*/
+(()=>{
+const PUB="BJpsl2Ec8+r+kQuKZI8F9TMWVy3GLvCDgdcpbjwkIlLWR1+zmYncOcqM0xFYIv1cYYQR0bDHVxcLY4RkWoRogVU=";
+const u8=s=>Uint8Array.from(atob(s.replace(/-/g,"+").replace(/_/g,"/")+"=".repeat((4-s.length%4)%4)),c=>c.charCodeAt(0));
+async function valid(c){try{const p=(c||"").trim().split(".");if(p.length!=2||!p[0]||!p[1])return false;
+ const k=await crypto.subtle.importKey("raw",u8(PUB),{name:"ECDSA",namedCurve:"P-256"},false,["verify"]);
+ return await crypto.subtle.verify({name:"ECDSA",hash:"SHA-256"},k,u8(p[1]),new TextEncoder().encode(p[0]))}catch(e){return false}}
+const enc=o=>btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(o)))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const dec=s=>JSON.parse(new TextDecoder().decode(u8(s)));
+const KEYS=["cw","cwg","cwx","cwv2"],get=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+function link(){const o={v:1,l:get("cwlic")||"",s:{}};KEYS.forEach(k=>{const v=get(k);if(v!==null)o.s[k]=v});return location.origin+location.pathname+"#restore="+enc(o)}
+async function restore(raw){
+ const s=(raw||"").trim(),m=s.match(/restore=([A-Za-z0-9_-]+)/);let code=s,set=null;
+ if(m){try{const o=dec(m[1]);code=o.l||"";set=o.s||null}catch(e){return "Lien invalide."}}
+ if(!(await valid(code)))return "Code invalide : vérifie que tu l'as copié en entier.";
+ try{localStorage.setItem("cwlic",code.trim());if(set)Object.keys(set).forEach(k=>{if(KEYS.includes(k))localStorage.setItem(k,String(set[k]))})}catch(e){return "Stockage du navigateur indisponible."}
+ return "ok"}
+if(location.hash.startsWith("#restore=")){restore(location.hash).then(r=>{history.replaceState(null,"",location.pathname+location.search);if(r=="ok"){alert("✅ Ton accès a été restauré sur cet appareil.");location.reload()}else alert("❌ "+r)})}
+const ov=document.createElement("div");
+ov.style.cssText="position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;z-index:99;padding:16px";
+ov.innerHTML='<div style="background:#183028;border:2px solid #d4af37;border-radius:14px;padding:16px;max-width:440px;width:100%;max-height:90vh;overflow:auto"><h3 style="margin:0 0 6px;color:#d4af37">🔑 Mon accès</h3><div id="rs"></div><button id="rx" style="width:100%;margin-top:10px">Fermer</button></div>';
+document.body.appendChild(ov);
+const BT='display:block;width:100%;margin:8px 0;min-height:48px;border-radius:12px;border:2px solid #d4af37;background:#183028;color:#eef3ef;font-weight:700;font-size:15px',ST='font-size:13px;color:#aab9b2;margin:6px 0';
+const box=ov.querySelector("#rs");
+async function copy(t,msg){try{await navigator.clipboard.writeText(t);return msg}catch(e){prompt("Copie ce texte :",t);return ""}}
+async function render(){
+ const code=get("cwlic"),pro=await valid(code);
+ if(pro){
+  box.innerHTML='<p style="'+ST+'">✔ Version complète active sur cet appareil. Pour changer de téléphone : envoie-toi ce lien et ouvre-le sur le nouveau téléphone. Ton achat et tes réglages seront restaurés.</p><button id="r1" style="'+BT+'">🔗 Copier mon lien de transfert</button><button id="r2" style="'+BT+'">💬 Envoyer par WhatsApp</button><button id="r3" style="'+BT+'">📋 Copier mon code seul</button><div id="rm" style="min-height:20px;font-size:13px"></div><p style="'+ST+'">⚠ Ne partage ni ce lien ni ce code : ils donnent accès à ta version complète. Rien n\'est envoyé à nos serveurs.</p>';
+  const m=box.querySelector("#rm");
+  box.querySelector("#r1").onclick=async()=>{m.textContent=await copy(link(),"✅ Lien copié.")};
+  box.querySelector("#r2").onclick=()=>{window.open("https://wa.me/?text="+encodeURIComponent("Mon lien de transfert Coran Professeur (à ne pas partager) : "+link()),"_blank")};
+  box.querySelector("#r3").onclick=async()=>{m.textContent=await copy(code,"✅ Code copié.")};
+ }else{
+  box.innerHTML='<p style="'+ST+'">Nouveau téléphone ? Colle ici ton code d\'activation ou ton lien de transfert.</p><textarea id="rt" rows="3" placeholder="Code ou lien de transfert" style="width:100%;box-sizing:border-box;background:#0f1b17;color:#eef3ef;border:1px solid #2f5a4b;border-radius:8px;padding:8px"></textarea><div id="rm" style="min-height:20px;font-size:13px;margin:6px 0"></div><button id="r4" style="'+BT+'">Restaurer mon achat</button><p style="'+ST+'">Tu n\'as plus ton code ? Écris-nous avec l\'e-mail de ton paiement : nous te le renvoyons. <a href="https://wa.me/212727850193" target="_blank" rel="noopener" style="color:#d4af37">WhatsApp</a> · <a href="mailto:arbahich@gmail.com" style="color:#d4af37">E-mail</a></p>';
+  box.querySelector("#r4").onclick=async()=>{const m=box.querySelector("#rm");m.textContent="Vérification...";const r=await restore(box.querySelector("#rt").value);
+   if(r=="ok"){m.textContent="✅ Achat restauré.";setTimeout(()=>location.reload(),900)}else m.textContent="❌ "+r}
+ }}
+const b=document.createElement("button");b.textContent="🔑 Mon accès";
+b.onclick=async()=>{await render();ov.style.display="flex"};
+const g2=document.querySelector("#sheet .g2");(g2||$("bar")).appendChild(b);
+ov.querySelector("#rx").onclick=()=>ov.style.display="none";ov.onclick=e=>{if(e.target===ov)ov.style.display="none"};
+})();
+</script>
+<script>/*PPICON_V1*/
+(()=>{
+const pp=$("pp");if(!pp||!document.body.classList.contains("phone"))return;
+const svg="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M3.4 5.6v12.8L12.6 12z' stroke='#000' stroke-width='1.8' stroke-linejoin='round'/><rect x='15.4' y='5' width='2.8' height='14' rx='1.4'/><rect x='19.8' y='5' width='2.8' height='14' rx='1.4'/></svg>";
+const css=document.createElement("style");
+css.textContent='body.phone #dock #pp{--pp2:url("data:image/svg+xml,'+encodeURIComponent(svg)+'")}'
++'body.phone #dock #pp::before{-webkit-mask-image:var(--pp2)!important;mask-image:var(--pp2)!important;width:36px!important;height:32px!important}'
++'body.phone #dock #pp::after{content:none!important}'
++'body.phone #dock #pp.on{border-color:#d4af37;background:#1f4034}'
++'body.phone #dock #pp.on::before{background:#d4af37!important}';
+document.head.appendChild(css);
+pp.setAttribute("aria-label","Lecture / Pause");pp.title="Lecture / Pause";
+const upd=()=>pp.classList.toggle("on",/Pause/.test(pp.textContent||""));
+new MutationObserver(upd).observe(pp,{childList:true,characterData:true,subtree:true});upd();
+})();
+</script>
+</body></html>

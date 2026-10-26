@@ -1,0 +1,477 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0f1b17"><title>Règles de tajweed - Coran Professeur</title><link rel="icon" href="icon-192.png">
+<style>
+:root{--bg:#0f1b17;--card:#183028;--line:#2f5a4b;--gold:#d4af37;--text:#eef3ef;--mut:#aab9b2}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",Arial,sans-serif;padding:0 14px 40px;-webkit-text-size-adjust:100%}
+main{max-width:760px;margin:auto}
+.top{position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #1d3a30}
+.top a{color:var(--gold);font-weight:700;text-decoration:none;padding:8px 0}
+.top a:hover{text-decoration:underline}
+#lang{min-width:56px;min-height:40px;padding:0 12px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--gold);font-weight:800;font-size:14px;letter-spacing:.5px;cursor:pointer}
+#lang:hover,#lang:focus-visible{border-color:var(--gold);outline:none}
+h1{color:var(--gold);font-size:1.5rem;margin:14px 0 6px;line-height:1.3}
+.lead{color:var(--mut);font-size:.95rem;margin:0 0 6px}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;padding:0 14px 8px}
+summary{cursor:pointer;font-weight:700;padding:14px 0;color:var(--gold);font-size:1.02rem}
+summary::marker{color:var(--gold)}
+h3{font-size:1rem;margin:14px 0 4px;color:#f0c36a}
+p{margin:8px 0}
+ul,ol{margin:8px 0;padding-inline-start:22px}
+li{margin:4px 0}
+.ar{font-family:"Traditional Arabic","Amiri","Scheherazade New",serif;font-size:1.2em;direction:rtl;unicode-bidi:isolate;color:#f5e6b8}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0}
+.tbl{overflow-x:auto}
+td,th{border-bottom:1px solid var(--line);padding:7px 6px;text-align:start;vertical-align:top}
+th{color:var(--gold);font-weight:700;font-size:.88rem;text-transform:none}
+tr:last-child td{border-bottom:0}
+.dot{display:inline-block;width:13px;height:13px;border-radius:50%;margin-inline-end:8px;vertical-align:-1px}
+.note{color:var(--mut);font-size:.88rem;border-inline-start:3px solid var(--line);padding-inline-start:10px;margin:12px 0}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.4px;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin-inline-start:6px;vertical-align:2px}
+footer{margin:22px 0 0;color:var(--mut);font-size:.85rem;border-top:1px solid var(--line);padding-top:12px}
+footer b{color:var(--text)}
+html[dir=rtl] body{font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",sans-serif}
+html[dir=rtl] td,html[dir=rtl] th{text-align:right}
+html[dir=rtl] .ar{font-size:1.15em}
+@media (max-width:520px){body{font-size:15px}h1{font-size:1.32rem}.ar{font-size:1.15em}td,th{padding:6px 4px}}
+</style></head><body><main>
+<div class="top"><a id="back" href="./">&larr; Retour à la lecture</a><button id="lang" type="button">FR</button></div>
+<h1 id="h1">Règles de tajweed</h1>
+<p class="lead" id="lead"></p>
+<div id="secs"></div>
+<footer id="foot"></footer>
+<script>
+const D={
+fr:{
+ code:"FR",
+ docTitle:"Règles de tajweed - Coran Professeur",
+ back:"&larr; Retour à la lecture",
+ h1:"Règles de tajweed",
+ lead:"Guide de révision pour la lecture de Hafs ʿan ʿĀsim, présenté comme dans les manuels pédagogiques du Complexe du Roi Fahd pour l'impression du Saint Coran : pour chaque règle, une définition, les lettres concernées, la condition d'application, un exemple et la durée. Le tajweed s'apprend à l'oral auprès d'un enseignant qualifié : cette page sert à réviser et ne le remplace pas. Les durées sont comptées en « temps » (ḥaraka).",
+ foot:"<b>Sources et références.</b> Lecture de Hafs ʿan ʿĀsim selon le muṣḥaf de Médine ; terminologie des manuels de tajweed (Matn Tuḥfat al-Aṭfāl, al-Muqaddima al-Jazariyya). Les couleurs du texte proviennent de l'édition quran-tajweed. Vérifie chaque règle auprès de ton enseignant : l'oreille d'un professeur reste irremplaçable.",
+ sec:[
+ {h:"1. Les couleurs de l'application",b:`
+<p>Le texte coloré ne remplace pas l'apprentissage : c'est un repère visuel qui signale la règle appliquée à l'endroit où elle se produit.</p>
+<p><span class="dot" style="background:#8a9a93"></span><b>Gris</b> : lettre muette, lām shamsiyya, hamzat al-waṣl.</p>
+<p><span class="dot" style="background:#e8a33d"></span><b>Orange</b> : madd naturel (2 temps). <b>Orange clair</b> : madd permis (2, 4 ou 6 temps).</p>
+<p><span class="dot" style="background:#e0553d"></span><b>Rouge</b> : madd obligatoire (4 à 6 temps).</p>
+<p><span class="dot" style="background:#4db1ff"></span><b>Bleu</b> : qalqala.</p>
+<p><span class="dot" style="background:#5fd37a"></span><b>Vert</b> : ikhfāʾ.</p>
+<p><span class="dot" style="background:#c58bff"></span><b>Violet</b> : iqlāb.</p>
+<p><span class="dot" style="background:#7fd6d0"></span><b>Turquoise</b> : idghām.</p>
+<p><span class="dot" style="background:#ff8fb0"></span><b>Rose</b> : ghunna.</p>
+<p class="note">Ces couleurs viennent de la source du texte : elles varient d'une édition à l'autre. En cas de doute, la règle écrite ci-dessous fait foi.</p>`},
+ {h:"2. Les points d'articulation (makhārij) : 17",b:`
+<p><b>Définition.</b> Le <i>makhraj</i> est le lieu d'où sort la lettre : c'est lui qui la distingue d'une autre. Les savants de la récitation en comptent <b>17</b>, répartis en <b>5 zones</b>.</p>
+<div class="tbl"><table>
+<tr><th>Zone</th><th>Lettres</th><th>Comment le son se forme</th></tr>
+<tr><td>Al-Jawf — cavité buccale et pharyngée</td><td class="ar">ا و ي</td><td>L'air passe librement, sans obstacle : ce sont les lettres de prolongation (madd).</td></tr>
+<tr><td>Gorge : fond (près du larynx)</td><td class="ar">ء ه</td><td>Son produit au plus profond de la gorge, sans effort sur la lettre.</td></tr>
+<tr><td>Gorge : milieu</td><td class="ar">ع ح</td><td>Resserrement au milieu de la gorge.</td></tr>
+<tr><td>Gorge : haut</td><td class="ar">غ خ</td><td>Resserrement en haut de la gorge, proche de la bouche.</td></tr>
+<tr><td>Langue : fond + palais mou</td><td class="ar">ق</td><td>Le dos de la langue remonte vers le palais mou.</td></tr>
+<tr><td>Langue : un peu en avant</td><td class="ar">ك</td><td>Un peu plus avant que le qāf, contre le palais dur.</td></tr>
+<tr><td>Langue : milieu + palais dur</td><td class="ar">ج ش ي</td><td>Le milieu de la langue touche le palais dur.</td></tr>
+<tr><td>Langue : bord + molaires</td><td class="ar">ض</td><td>Le bord de la langue s'appuie sur les molaires supérieures.</td></tr>
+<tr><td>Langue : bord avant + palais</td><td class="ar">ل</td><td>Le bord avant touche la gencive des incisives supérieures.</td></tr>
+<tr><td>Langue : pointe, sous le lām</td><td class="ar">ن</td><td>Pointe de la langue juste derrière les incisives.</td></tr>
+<tr><td>Langue : pointe, un peu en arrière</td><td class="ar">ر</td><td>Pointe de la langue un peu plus reculée, avec vibration légère.</td></tr>
+<tr><td>Pointe + base des incisives supérieures</td><td class="ar">ط د ت</td><td>La pointe touche la base des incisives supérieures.</td></tr>
+<tr><td>Pointe + incisives (sifflantes)</td><td class="ar">ص س ز</td><td>La pointe s'approche des incisives : un sifflement accompagne le son.</td></tr>
+<tr><td>Pointe + bord des incisives supérieures</td><td class="ar">ظ ذ ث</td><td>La pointe sort un peu entre les incisives.</td></tr>
+<tr><td>Lèvres : lèvre inférieure + incisives</td><td class="ar">ف</td><td>La lèvre inférieure touche le bord des incisives supérieures.</td></tr>
+<tr><td>Lèvres : les deux lèvres</td><td class="ar">ب م و</td><td>Les deux lèvres se rejoignent (le wāw avec arrondissement).</td></tr>
+<tr><td>Al-Khayshūm — cavité nasale</td><td>ghunna</td><td>La résonance nasale accompagne le nūn et le mīm renforcés.</td></tr>
+</table></div>
+<p class="note">Deux lettres peuvent partager une zone et rester distinctes : ce sont leurs attributs (voir §3) qui les séparent.</p>`},
+ {h:"3. Les attributs des lettres (ṣifāt)",b:`
+<p><b>Définition.</b> Les <i>ṣifāt</i> décrivent la manière dont la lettre sort de son point d'articulation. On distingue les attributs qui ont un contraire et ceux qui n'en ont pas.</p>
+<div class="tbl"><table>
+<tr><th>Attribut</th><th>Sens</th><th>Lettres</th></tr>
+<tr><td>Hams / Jahr</td><td>Hams : souffle qui accompagne le son. Jahr : voix retenue, sans souffle.</td><td>Hams : <span class="ar">ف ح ث ه ش خ ص س ك ت</span> — les autres sont jahr.</td></tr>
+<tr><td>Shidda / Tawassuṭ / Rakhāwa</td><td>Shidda : le son s'arrête net. Tawassuṭ : ni arrêt ni écoulement. Rakhāwa : le son s'écoule.</td><td>Shidda : <span class="ar">أ ج د ق ط ب ك ت</span> · Tawassuṭ : <span class="ar">ل ن ع م ر</span> · le reste : rakhāwa.</td></tr>
+<tr><td>Istiʿlāʾ / Istifāl</td><td>Istiʿlāʾ : la langue remonte, lettre pleine (tafkhīm). Istifāl : la langue reste basse, lettre fine (tarqīq).</td><td>Istiʿlāʾ : <span class="ar">خ ص ض غ ط ق ظ</span> — les autres : istifāl.</td></tr>
+<tr><td>Iṭbāq / Infitāḥ</td><td>Iṭbāq : la langue colle au palais, fermeture renforcée. Infitāḥ : la langue ne colle pas.</td><td>Iṭbāq : <span class="ar">ص ض ط ظ</span> — les autres : infitāḥ.</td></tr>
+<tr><td>Idhlāq / Iṣmat</td><td>Idhlāq : facilité de prononciation. Iṣmat : prononciation plus ferme.</td><td>Idhlāq : <span class="ar">ف ر م ن ل ب</span> — les autres : iṣmat.</td></tr>
+<tr><td>Safīr</td><td>Sifflement aigu qui accompagne la lettre.</td><td><span class="ar">ص س ز</span></td></tr>
+<tr><td>Qalqala</td><td>Rebond léger du son quand la lettre est sans voyelle.</td><td><span class="ar">ق ط ب ج د</span> — voir §6.</td></tr>
+<tr><td>Līn</td><td>Douceur de wāw et yāʾ sans voyelle, précédés d'une fatha.</td><td><span class="ar">و ي</span> — voir §7.</td></tr>
+<tr><td>Inḥirāf</td><td>Le son glisse vers un autre point d'articulation.</td><td><span class="ar">ل ر</span></td></tr>
+<tr><td>Takrīr</td><td>Vibration de la pointe de la langue.</td><td><span class="ar">ر</span> — à prononcer sans excès.</td></tr>
+<tr><td>Tafashshī</td><td>Le souffle se répand dans la bouche.</td><td><span class="ar">ش</span></td></tr>
+<tr><td>Istīṭāla</td><td>Allongement du son le long du bord de la langue.</td><td><span class="ar">ض</span></td></tr>
+</table></div>
+<p class="note">Une lettre est pleine (tafkhīm) ou fine (tarqīq) selon son attribut d'istiʿlāʾ et son contexte : l'oreille de l'enseignant tranche les cas limites.</p>`},
+ {h:"4. Nūn sākin et tanwīn",b:`
+<p><b>Définition.</b> Le <i>nūn sākin</i> est un nūn sans voyelle ; le <i>tanwīn</i> est la double voyelle finale (ـًا ـٌ ـٍ), qui se prononce comme un nūn sākin suivi d'une voyelle. Quatre règles s'appliquent selon la lettre qui suit.</p>
+<h3>Iẓhār (clair) <span class="tag">6 lettres</span></h3>
+<p><b>Lettres.</b> <span class="ar">ء ه ع ح غ خ</span> (gorge). <b>Condition.</b> Le nūn ou le tanwīn est prononcé nettement, sans ghunna, devant l'une de ces lettres. <b>Exemples.</b> <span class="ar">مَنْ هَادٍ · أَنْعَمْتَ · يَنْهَوْنَ</span></p>
+<h3>Idghām (fusion) <span class="tag">6 lettres</span></h3>
+<p><b>Lettres.</b> <span class="ar">ي ر م ل و ن</span>. <b>Avec ghunna</b> pour <span class="ar">ي ن م و</span> (<span class="ar">مَنْ يَقُولُ · مِنْ نُطْفَةٍ · مِنْ مَاءٍ · مِنْ وَلِيٍّ</span>) ; <b>sans ghunna</b> pour <span class="ar">ل ر</span> (<span class="ar">مِنْ رَبِّهِمْ · فَإِنْ لَمْ تَفْعَلُوا</span>). <b>Condition.</b> La fusion n'a lieu qu'entre deux mots ; dans un même mot, on revient à l'iẓhār : <span class="ar">دُنْيَا · بُنْيَان · صِنْوَان · قِنْوَان</span>.</p>
+<h3>Iqlāb (conversion) <span class="tag">1 lettre</span></h3>
+<p><b>Lettre.</b> <span class="ar">ب</span>. <b>Effet.</b> Le nūn devient un mīm, prononcé avec ikhfāʾ et ghunna de <b>2 temps</b>. <b>Exemples.</b> <span class="ar">أَنْبِئْهُمْ · مِنْ بَعْدِ · سَمِيعٌ بَصِيرٌ</span></p>
+<h3>Ikhfāʾ (dissimulation) <span class="tag">15 lettres</span></h3>
+<p><b>Lettres.</b> <span class="ar">ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</span>. <b>Effet.</b> Le son est dissimulé entre l'iẓhār et l'idghām, avec ghunna de <b>2 temps</b>. <b>Exemples.</b> <span class="ar">أَنْتُمْ · مِنْ قَبْلِ · كُنْتُمْ · جُنْدٌ</span>. Le degré d'ikhfāʾ varie : plus proche de l'idghām, moyen, plus proche de l'iẓhār, selon l'éloignement du point d'articulation.</p>`},
+ {h:"5. Mīm sakina",b:`
+<p><b>Définition.</b> Mīm sans voyelle. Trois règles seulement, dites <i>shafawiyya</i> parce qu'elles se prononcent aux lèvres.</p>
+<h3>Ikhfāʾ shafawī <span class="tag">devant ب</span></h3>
+<p>La mīm est dissimulée avec ghunna de <b>2 temps</b>, les lèvres se touchent à peine. <b>Exemples.</b> <span class="ar">تَرْمِيهِمْ بِحِجَارَةٍ · أَمْ بِهِ</span></p>
+<h3>Idghām shafawī <span class="tag">devant م</span></h3>
+<p>Les deux mīm fusionnent, avec ghunna de <b>2 temps</b>. <b>Exemples.</b> <span class="ar">لَهُمْ مَغْفِرَةٌ · مِنْ مَالٍ</span></p>
+<h3>Iẓhār shafawī <span class="tag">les autres lettres</span></h3>
+<p>La mīm est prononcée clairement, sans ghunna allongée ; on soigne la prononciation devant <span class="ar">و</span> et <span class="ar">ف</span> pour ne pas confondre les lèvres. <b>Exemples.</b> <span class="ar">لَهُمْ فِيهَا · وَهُمْ وَاقِفُونَ</span></p>`},
+ {h:"6. Ghunna et qalqala",b:`
+<h3>Ghunna</h3>
+<p><b>Définition.</b> Son nasal qui résonne dans la cavité nasale. <b>Obligatoire</b> sur le nūn et le mīm portant une shadda (<span class="ar">نّ مّ</span>) : elle dure <b>2 temps</b>. <b>Exemples.</b> <span class="ar">إِنَّ · ثُمَّ</span>. Elle est aussi de <b>2 temps</b> dans l'idghām, l'iqlāb et l'ikhfāʾ. On distingue la ghunna <i>mushaddada</i> (appuyée) et <i>mukhaffafa</i> (allégée) ; dans les deux cas, la durée reste de 2 temps.</p>
+<h3>Qalqala</h3>
+<p><b>Lettres.</b> <span class="ar">ق ط ب ج د</span>. <b>Définition.</b> Rebond léger du son lorsque la lettre est sans voyelle (sukūn). On distingue deux degrés : <b>sughrā</b> (rejet léger, au milieu d'un mot : <span class="ar">يَجْعَلُونَ</span>) et <b>kubrā</b> (rejet plus marqué à l'arrêt : <span class="ar">أَحَدْ</span>). Le qalqala ne doit pas être transformé en voyelle.</p>`},
+ {h:"7. Le madd (prolongation)",b:`
+<p><b>Définition.</b> Allongement de la voix sur une lettre de madd : <span class="ar">ا و ي</span>. On mesure en <i>ḥarakāt</i> (temps) : 2 temps correspondent à la durée d'une voyelle courte.</p>
+<div class="tbl"><table>
+<tr><th>Type</th><th>Condition</th><th>Exemple</th><th>Durée</th></tr>
+<tr><td>Ṭabīʿī (aṣlī)</td><td>Lettre de madd sans hamza ni sukūn après elle.</td><td class="ar">قَالَ · يَقُولُ · قِيلَ</td><td>2</td></tr>
+<tr><td>Badal</td><td>Hamza placée avant la lettre de madd.</td><td class="ar">آمَنُوا · إِيمَانًا</td><td>2</td></tr>
+<tr><td>ʿIwaḍ</td><td>Arrêt sur un tanwīn fatḥa : on lit un alif.</td><td class="ar">أَحَدًا ← أَحَدَا</td><td>2</td></tr>
+<tr><td>Ṣila sughrā</td><td>Hāʾ du pronom entre deux voyelles, sans hamza après.</td><td class="ar">إِنَّهُ هُوَ</td><td>2</td></tr>
+<tr><td>Ṣila kubrā</td><td>Hāʾ du pronom suivie d'une hamza.</td><td class="ar">بِهِ أَحَدًا</td><td>4 à 5</td></tr>
+<tr><td>Muttaṣil</td><td>Lettre de madd suivie d'une hamza dans le même mot.</td><td class="ar">جَاءَ · السَّمَاءِ</td><td>4 à 5 <i>(obligatoire)</i></td></tr>
+<tr><td>Munfaṣil</td><td>Lettre de madd en fin de mot, hamza au début du mot suivant.</td><td class="ar">بِمَا أُنْزِلَ</td><td>2 à 5</td></tr>
+<tr><td>ʿĀriḍ li-l-sukūn</td><td>Lettre de madd suivie d'un sukūn dû à l'arrêt.</td><td class="ar">نَسْتَعِينُ</td><td>2, 4 ou 6</td></tr>
+<tr><td>Līn</td><td>Wāw ou yāʾ sans voyelle après une fatḥa, à l'arrêt.</td><td class="ar">خَوْفٍ · بَيْتٍ</td><td>2, 4 ou 6</td></tr>
+<tr><td>Lāzim</td><td>Lettre de madd suivie d'un sukūn ou d'une shadda permanents, ou lettres isolées en début de sourate.</td><td class="ar">الضَّالِّينَ · الٓمٓ</td><td>6 <i>(obligatoire)</i></td></tr>
+</table></div>
+<p class="note">Le choix entre 2, 4 et 6 temps pour le munfaṣil, le ʿāriḍ et le līn dépend de l'école et du maître : l'important est de rester constant dans une même lecture.</p>`},
+ {h:"8. Lām et rāʾ",b:`
+<h3>Lām de l'article</h3>
+<p><b>Shamsiyya</b> (non prononcée, la lettre suivante est renforcée) devant <span class="ar">ت ث د ذ ر ز س ش ص ض ط ظ ل ن</span> : <span class="ar">الشَّمْسُ · الرَّحْمَنُ</span>.<br><b>Qamariyya</b> (prononcée, sukun) devant <span class="ar">ا ب ج ح خ ع غ ف ق ك م و ه ي</span> : <span class="ar">الْقَمَرُ · الْحَمْدُ</span>.</p>
+<h3>Lām du nom d'Allah</h3>
+<p><b>Épaisse (tafkhīm)</b> après une fatḥa ou une ḍamma : <span class="ar">قَالَ اللَّهُ · عَبْدُ اللَّهِ</span>. <b>Fine (tarqīq)</b> après une kasra : <span class="ar">بِاللَّهِ · لِلَّهِ</span>.</p>
+<h3>Rāʾ</h3>
+<p><b>Avec voyelle.</b> Épaisse avec fatḥa ou ḍamma (<span class="ar">رَبِّ · رُحَمَاءُ</span>), fine avec kasra (<span class="ar">رِزْقًا</span>).<br><b>Sākina.</b> Épaisse après fatḥa ou ḍamma (<span class="ar">مَرْيَمُ · كُرْسِيٌّ</span>), fine après kasra (<span class="ar">فِرْعَوْنُ</span>). Après une kasra suivie d'une lettre d'istiʿlāʾ, elle s'épaissit (<span class="ar">فِرْقٍ</span>). Après un yāʾ sākin, le cas s'étudie avec l'enseignant (<span class="ar">مَجْرَىٰ</span>).</p>`},
+ {h:"9. Hamzat al-waṣl et hamzat al-qaṭʿ",b:`
+<p><b>Waṣl</b> (<span class="ar">ٱ</span>) : prononcée seulement au début de la lecture ; elle disparaît quand on enchaîne. On la trouve dans l'article <span class="ar">ٱل</span>, dans certains verbes à l'impératif et dans certains noms (<span class="ar">ٱبْن · ٱسْم</span>). <b>Exemples.</b> <span class="ar">ٱلْحَمْدُ لِلَّهِ · ٱسْتَعِينُوا</span></p>
+<p><b>Qaṭʿ</b> (<span class="ar">أ</span>) : toujours prononcée, même en enchaînant. <b>Exemples.</b> <span class="ar">أَنْعَمْتَ · إِنَّ</span></p>
+<p class="note">Au début de la lecture, la waṣl se prononce avec son voyelle propre ; en milieu de phrase, on la saute et on relie directement.</p>`},
+ {h:"10. L'arrêt (waqf) et la reprise (ibtidāʾ)",b:`
+<h3>Les types d'arrêt</h3>
+<p><b>Tāmm</b> (complet) : le sens est achevé et la suite ne s'y rattache pas. <b>Kāfī</b> (suffisant) : le sens est achevé, mais la suite s'y rattache par le sens. <b>Ḥasan</b> (correct) : le sens est achevé, mais la suite y est liée grammaticalement. <b>Qabīḥ</b> (mauvais) : l'arrêt coupe une idée essentielle.</p>
+<h3>Comment s'arrêter</h3>
+<p>La dernière lettre prend un sukūn ; le tanwīn fatḥa devient un alif (<span class="ar">أَحَدًا → أَحَدَا</span>) ; le tāʾ marbūṭa devient un hāʾ (<span class="ar">رَحْمَةٌ → رَحْمَهْ</span>).</p>
+<h3>Les signes du muṣḥaf</h3>
+<div class="tbl"><table>
+<tr><th>Signe</th><th>Sens</th></tr>
+<tr><td class="ar">م</td><td>Arrêt obligatoire.</td></tr>
+<tr><td class="ar">لا</td><td>Ne pas s'arrêter.</td></tr>
+<tr><td class="ar">ج</td><td>Arrêt permis ; continuer est aussi permis.</td></tr>
+<tr><td class="ar">قلى</td><td>L'arrêt est préférable.</td></tr>
+<tr><td class="ar">صلى</td><td>L'enchaînement est préférable.</td></tr>
+</table></div>
+<p class="note">La forme des signes varie selon le muṣḥaf : vérifie la légende de ton édition.</p>`},
+ {h:"11. Les erreurs de lecture",b:`
+<p><b>Laḥn jalī</b> (erreur manifeste) : changer une lettre, une voyelle ou un sukūn, au point de modifier le sens. C'est la faute la plus grave : elle doit être corrigée immédiatement.</p>
+<p><b>Laḥn khafī</b> (erreur subtile) : manquer une ghunna, écourter un madd, négliger un qalqala ou l'épaisseur d'une lettre. Le sens reste intact, mais la récitation perd sa précision.</p>
+<p class="note">Une erreur qu'on ne sait pas corriger seul se travaille à l'oral : écoute, répète, fais corriger.</p>`},
+ {h:"12. Comment progresser",b:`
+<ol>
+<li><b>Écoute.</b> Choisis un récitateur reconnu dans l'application et suis chaque verset avant de le lire.</li>
+<li><b>Répète.</b> Récite le verset à voix haute, puis compare avec le modèle ; le mode « Professeur » est fait pour cela.</li>
+<li><b>Corrige.</b> Travaille une règle à la fois : une semaine le nūn sākin, la suivante le madd, etc.</li>
+<li><b>Fais valider.</b> Un enseignant qualifié, idéalement avec ijāza, corrige ce que l'oreille seule ne perçoit pas.</li>
+</ol>
+<p class="note">La régularité vaut mieux que la quantité : dix minutes par jour, récitées avec attention, font plus qu'une heure sans écoute.</p>`}
+ ]},
+ar:{
+ code:"ع",
+ docTitle:"أحكام التجويد - القرآن المعلّم",
+ back:"&rarr; العودة إلى القراءة",
+ h1:"أحكام التجويد",
+ lead:"دليل مراجعة لقراءة حفص عن عاصم، عُرضت فيه القواعد على طريقة الكتب التعليمية لمجمع الملك فهد لطباعة المصحف الشريف: تعريف، وحروف، وشرط، ومثال، ومقدار. والتجويد يُتلقّى مشافهةً عن شيخ مجاز، وهذه الصفحة للمراجعة ولا تُغني عنه. والمقادير محسوبة بالحركات.",
+ foot:"<b>المراجع.</b> قراءة حفص عن عاصم كما في مصحف المدينة؛ ومصطلحات كتب التجويد (تحفة الأطفال، المقدمة الجزرية). وألوان النص مأخوذة من طبعة quran-tajweed، وقد تختلف من مصحف إلى آخر. واعرض كل قاعدة على شيخك، فأذن المعلّم لا يُستغنى عنها.",
+ sec:[
+ {h:"١. ألوان التطبيق",b:`
+<p>النص الملوّن لا يُغني عن التعلّم، وإنما هو علامة بصرية تدلّ على الحكم في موضعه.</p>
+<p><span class="dot" style="background:#8a9a93"></span><b>الرمادي</b>: حرف لا يُنطق، ولام شمسية، وهمزة وصل.</p>
+<p><span class="dot" style="background:#e8a33d"></span><b>البرتقالي</b>: مدّ طبيعي (حركتان). <b>البرتقالي الفاتح</b>: مدّ جائز (حركتان أو أربع أو ست).</p>
+<p><span class="dot" style="background:#e0553d"></span><b>الأحمر</b>: مدّ واجب (من أربع إلى ست حركات).</p>
+<p><span class="dot" style="background:#4db1ff"></span><b>الأزرق</b>: قلقلة.</p>
+<p><span class="dot" style="background:#5fd37a"></span><b>الأخضر</b>: إخفاء.</p>
+<p><span class="dot" style="background:#c58bff"></span><b>البنفسجي</b>: إقلاب.</p>
+<p><span class="dot" style="background:#7fd6d0"></span><b>الفيروزي</b>: إدغام.</p>
+<p><span class="dot" style="background:#ff8fb0"></span><b>الوردي</b>: غنّة.</p>
+<p class="note">هذه الألوان من مصدر النص، وتختلف باختلاف الطبعات. وعند الاختلاف يُعتمد على القاعدة المكتوبة أدناه.</p>`},
+ {h:"٢. مخارج الحروف: ١٧ مخرجًا",b:`
+<p><b>التعريف.</b> المخرج هو الموضع الذي ينشأ منه الحرف، وبه يتميّز عن غيره. وقد عدّها علماء القراءة <b>سبعة عشر</b> مخرجًا في <b>خمسة</b> مواضع.</p>
+<div class="tbl"><table>
+<tr><th>الموضع</th><th>الحروف</th><th>كيفية خروج الصوت</th></tr>
+<tr><td>الجوف — تجويف الفم والحلق</td><td class="ar">ا و ي</td><td>الهواء يمرّ دون حاجز، وهي حروف المدّ.</td></tr>
+<tr><td>الحلق: أقصاه</td><td class="ar">ء ه</td><td>صوت من أعمق الحلق قرب الحنجرة.</td></tr>
+<tr><td>الحلق: وسطه</td><td class="ar">ع ح</td><td>تضييق في وسط الحلق.</td></tr>
+<tr><td>الحلق: أعلاه</td><td class="ar">غ خ</td><td>تضييق في أعلى الحلق قرب الفم.</td></tr>
+<tr><td>اللسان: أقصاه مع الحنك اللين</td><td class="ar">ق</td><td>يرتفع أقصى اللسان إلى الحنك اللين.</td></tr>
+<tr><td>اللسان: قليلًا إلى الأمام</td><td class="ar">ك</td><td>أمام مخرج القاف، مع الحنك الصلب.</td></tr>
+<tr><td>اللسان: وسطه مع الحنك الصلب</td><td class="ar">ج ش ي</td><td>وسط اللسان يلامس الحنك الصلب.</td></tr>
+<tr><td>اللسان: حافّته مع الأضراس</td><td class="ar">ض</td><td>حافة اللسان تستند إلى الأضراس العليا.</td></tr>
+<tr><td>اللسان: حافّته الأمامية مع الحنك</td><td class="ar">ل</td><td>الحافة الأمامية تلامس لثة الثنايا العليا.</td></tr>
+<tr><td>اللسان: طرفه تحت مخرج اللام</td><td class="ar">ن</td><td>طرف اللسان خلف الثنايا مباشرة.</td></tr>
+<tr><td>اللسان: طرفه قليلًا إلى الخلف</td><td class="ar">ر</td><td>طرف اللسان متراجع قليلًا مع اهتزاز خفيف.</td></tr>
+<tr><td>الطرف مع أصول الثنايا العليا</td><td class="ar">ط د ت</td><td>الطرف يلامس أصول الثنايا العليا.</td></tr>
+<tr><td>الطرف مع الثنايا (الصفيرية)</td><td class="ar">ص س ز</td><td>يقترب الطرف من الثنايا فيصحبه صفير.</td></tr>
+<tr><td>الطرف مع أطراف الثنايا العليا</td><td class="ar">ظ ذ ث</td><td>يخرج طرف اللسان قليلًا بين الثنايا.</td></tr>
+<tr><td>الشفتان: الشفة السفلى مع الثنايا</td><td class="ar">ف</td><td>الشفة السفلى تلامس أطراف الثنايا العليا.</td></tr>
+<tr><td>الشفتان: كلتاهما</td><td class="ar">ب م و</td><td>تلتقي الشفتان، والواو مع تدوير الشفتين.</td></tr>
+<tr><td>الخيشوم — تجويف الأنف</td><td>الغنّة</td><td>رنين أنفي يصحب النون والميم المشدّدتين.</td></tr>
+</table></div>
+<p class="note">قد يشترك حرفان في مخرج ويبقى كلٌّ منهما متميّزًا؛ والفرق بينهما في الصفات (انظر ٣).</p>`},
+ {h:"٣. صفات الحروف",b:`
+<p><b>التعريف.</b> الصفة كيفية خروج الحرف من مخرجه. والصفات منها ما له ضدّ، ومنها ما لا ضدّ له.</p>
+<div class="tbl"><table>
+<tr><th>الصفة</th><th>معناها</th><th>حروفها</th></tr>
+<tr><td>الهمس / الجهر</td><td>الهمس: نفسٌ يصحب الصوت. الجهر: انحباس النفس مع قوة الصوت.</td><td>الهمس: <span class="ar">ف ح ث ه ش خ ص س ك ت</span> — والباقي جهر.</td></tr>
+<tr><td>الشدة / التوسط / الرخاوة</td><td>الشدة: ينقطع الصوت. التوسط: لا انقطاع ولا جريان. الرخاوة: يجري الصوت.</td><td>الشدة: <span class="ar">أ ج د ق ط ب ك ت</span> · التوسط: <span class="ar">ل ن ع م ر</span> · والباقي رخاوة.</td></tr>
+<tr><td>الاستعلاء / الاستفال</td><td>الاستعلاء: يرتفع اللسان فيُفخّم الحرف. الاستفال: يبقى اللسان منخفضًا فيُرقّق.</td><td>الاستعلاء: <span class="ar">خ ص ض غ ط ق ظ</span> — والباقي استفال.</td></tr>
+<tr><td>الإطباق / الانفتاح</td><td>الإطباق: يلتصق اللسان بالحنك فيقوى الإغلاق. الانفتاح: لا يلتصق.</td><td>الإطباق: <span class="ar">ص ض ط ظ</span> — والباقي انفتاح.</td></tr>
+<tr><td>الإذلاق / الإصمات</td><td>الإذلاق: سهولة في النطق. الإصمات: قوة وثقل.</td><td>الإذلاق: <span class="ar">ف ر م ن ل ب</span> — والباقي إصمات.</td></tr>
+<tr><td>الصفير</td><td>صوت حادّ يصحب الحرف.</td><td><span class="ar">ص س ز</span></td></tr>
+<tr><td>القلقلة</td><td>اضطراب خفيف في الصوت عند سكون الحرف.</td><td><span class="ar">ق ط ب ج د</span> — انظر ٦.</td></tr>
+<tr><td>اللين</td><td>لين الواو والياء الساكنتين المفتوح ما قبلهما.</td><td><span class="ar">و ي</span> — انظر ٧.</td></tr>
+<tr><td>الانحراف</td><td>ميل الصوت إلى مخرج آخر.</td><td><span class="ar">ل ر</span></td></tr>
+<tr><td>التكرير</td><td>اهتزاز طرف اللسان.</td><td><span class="ar">ر</span> — من غير مبالغة.</td></tr>
+<tr><td>التفشي</td><td>انتشار الهواء في الفم.</td><td><span class="ar">ش</span></td></tr>
+<tr><td>الاستطالة</td><td>امتداد الصوت على حافة اللسان.</td><td><span class="ar">ض</span></td></tr>
+</table></div>
+<p class="note">الحرف يُفخّم أو يُرقّق بحسب صفة الاستعلاء والسياق؛ والمرجع في الحالات الدقيقة سماع الشيخ.</p>`},
+ {h:"٤. النون الساكنة والتنوين",b:`
+<p><b>التعريف.</b> النون الساكنة نون بلا حركة، والتنوين حركتان في آخر الكلمة (ـًا ـٌ ـٍ) يُنطق بهما نونًا ساكنة. وأحكامهما أربعة بحسب الحرف التالي.</p>
+<h3>الإظهار <span class="tag">٦ حروف</span></h3>
+<p><b>حروفه.</b> <span class="ar">ء ه ع ح غ خ</span> (حروف الحلق). <b>الشرط.</b> يُنطق النون أو التنوين واضحًا من غير غنّة. <b>المثال.</b> <span class="ar">مَنْ هَادٍ · أَنْعَمْتَ · يَنْهَوْنَ</span></p>
+<h3>الإدغام <span class="tag">٦ حروف</span></h3>
+<p><b>حروفه.</b> <span class="ar">ي ر م ل و ن</span>. <b>بغنّة</b> في <span class="ar">ي ن م و</span> (<span class="ar">مَنْ يَقُولُ · مِنْ نُطْفَةٍ · مِنْ مَاءٍ · مِنْ وَلِيٍّ</span>)، <b>بغير غنّة</b> في <span class="ar">ل ر</span> (<span class="ar">مِنْ رَبِّهِمْ · فَإِنْ لَمْ تَفْعَلُوا</span>). <b>الشرط.</b> لا يكون الإدغام إلا بين كلمتين؛ فإن اجتمعا في كلمة رجعنا إلى الإظهار: <span class="ar">دُنْيَا · بُنْيَان · صِنْوَان · قِنْوَان</span>.</p>
+<h3>الإقلاب <span class="tag">حرف واحد</span></h3>
+<p><b>حرفه.</b> <span class="ar">ب</span>. <b>أثره.</b> تنقلب النون ميمًا تُنطق بإخفاء وغنّة مقدار <b>حركتين</b>. <b>المثال.</b> <span class="ar">أَنْبِئْهُمْ · مِنْ بَعْدِ · سَمِيعٌ بَصِيرٌ</span></p>
+<h3>الإخفاء <span class="tag">١٥ حرفًا</span></h3>
+<p><b>حروفه.</b> <span class="ar">ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</span>. <b>أثره.</b> يُخفى الصوت بين الإظهار والإدغام مع غنّة مقدار <b>حركتين</b>. <b>المثال.</b> <span class="ar">أَنْتُمْ · مِنْ قَبْلِ · كُنْتُمْ · جُنْدٌ</span>. وللإخفاء مراتب: أقرب إلى الإدغام، ومتوسطة، وأقرب إلى الإظهار، بحسب قرب المخرج.</p>`},
+ {h:"٥. الميم الساكنة",b:`
+<p><b>التعريف.</b> ميم بلا حركة، وأحكامها ثلاثة تُسمى شفوية لأنها تُنطق بالشفتين.</p>
+<h3>الإخفاء الشفوي <span class="tag">قبل ب</span></h3>
+<p>تُخفى الميم مع غنّة مقدار <b>حركتين</b>، والشفتان تتلامسان تلامسًا خفيفًا. <b>المثال.</b> <span class="ar">تَرْمِيهِمْ بِحِجَارَةٍ · أَمْ بِهِ</span></p>
+<h3>الإدغام الشفوي <span class="tag">قبل م</span></h3>
+<p>تدغم الميمان مع غنّة مقدار <b>حركتين</b>. <b>المثال.</b> <span class="ar">لَهُمْ مَغْفِرَةٌ · مِنْ مَالٍ</span></p>
+<h3>الإظهار الشفوي <span class="tag">بقية الحروف</span></h3>
+<p>تُنطق الميم واضحة من غير غنّة ممطوطة، ويُعتنى بها قبل <span class="ar">و</span> و<span class="ar">ف</span> لئلا تلتبس الشفتان. <b>المثال.</b> <span class="ar">لَهُمْ فِيهَا · وَهُمْ وَاقِفُونَ</span></p>`},
+ {h:"٦. الغنّة والقلقلة",b:`
+<h3>الغنّة</h3>
+<p><b>التعريف.</b> رنين أنفي في الخيشوم. <b>واجبة</b> في النون والميم المشدّدتين (<span class="ar">نّ مّ</span>) ومقدارها <b>حركتان</b>. <b>المثال.</b> <span class="ar">إِنَّ · ثُمَّ</span>. وهي أيضًا حركتان في الإدغام والإقلاب والإخفاء. وتُقسم إلى مشدّدة (مثقلة) ومخففة، والمقدار في الحالين حركتان.</p>
+<h3>القلقلة</h3>
+<p><b>حروفها.</b> <span class="ar">ق ط ب ج د</span>. <b>التعريف.</b> اضطراب خفيف في الصوت عند سكون الحرف. ومراتبها: <b>الصغرى</b> (اضطراب خفيف وسط الكلمة: <span class="ar">يَجْعَلُونَ</span>) و<b>الكبرى</b> (أقوى عند الوقف: <span class="ar">أَحَدْ</span>). ولا يجوز تحويل القلقلة إلى حركة.</p>`},
+ {h:"٧. المدود",b:`
+<p><b>التعريف.</b> إطالة الصوت بحرف المدّ: <span class="ar">ا و ي</span>. ويُقاس بالحركات: الحركتان مقدار حركة قصيرة.</p>
+<div class="tbl"><table>
+<tr><th>النوع</th><th>شرطه</th><th>المثال</th><th>مقداره</th></tr>
+<tr><td>طبيعي (أصلي)</td><td>حرف مدّ لا همزة بعده ولا سكون.</td><td class="ar">قَالَ · يَقُولُ · قِيلَ</td><td>٢</td></tr>
+<tr><td>بدل</td><td>همزة قبل حرف المدّ.</td><td class="ar">آمَنُوا · إِيمَانًا</td><td>٢</td></tr>
+<tr><td>عوض</td><td>الوقف على تنوين الفتح، فيُقرأ ألفًا.</td><td class="ar">أَحَدًا ← أَحَدَا</td><td>٢</td></tr>
+<tr><td>صلة صغرى</td><td>هاء الكناية بين متحركين، ولا همزة بعدها.</td><td class="ar">إِنَّهُ هُوَ</td><td>٢</td></tr>
+<tr><td>صلة كبرى</td><td>هاء الكناية بعدها همزة.</td><td class="ar">بِهِ أَحَدًا</td><td>٤–٥</td></tr>
+<tr><td>متصل</td><td>حرف المدّ وهمزة في كلمة واحدة.</td><td class="ar">جَاءَ · السَّمَاءِ</td><td>٤–٥ <i>(واجب)</i></td></tr>
+<tr><td>منفصل</td><td>حرف المدّ آخر كلمة، والهمزة أول الكلمة التالية.</td><td class="ar">بِمَا أُنْزِلَ</td><td>٢–٥</td></tr>
+<tr><td>عارض للسكون</td><td>حرف المدّ بعده سكون عارض للوقف.</td><td class="ar">نَسْتَعِينُ</td><td>٢ أو ٤ أو ٦</td></tr>
+<tr><td>لين</td><td>واو أو ياء ساكنة بعد فتحة، عند الوقف.</td><td class="ar">خَوْفٍ · بَيْتٍ</td><td>٢ أو ٤ أو ٦</td></tr>
+<tr><td>لازم</td><td>حرف المدّ بعده سكون أو شدّة لازمة، أو حروف مقطّعة في أول السورة.</td><td class="ar">الضَّالِّينَ · الٓمٓ</td><td>٦ <i>(واجب)</i></td></tr>
+</table></div>
+<p class="note">اختيار حركتين أو أربع أو ست في المنفصل والعارض واللين يختلف باختلاف المذهب والشيخ؛ والمهمّ الثبات على وجه واحد في القراءة.</p>`},
+ {h:"٨. اللام والراء",b:`
+<h3>لام التعريف</h3>
+<p><b>شمسية</b> (لا تُنطق ويُشدّد ما بعدها) قبل <span class="ar">ت ث د ذ ر ز س ش ص ض ط ظ ل ن</span>: <span class="ar">الشَّمْسُ · الرَّحْمَنُ</span>.<br><b>قمرية</b> (تُنطق ساكنة) قبل <span class="ar">ا ب ج ح خ ع غ ف ق ك م و ه ي</span>: <span class="ar">الْقَمَرُ · الْحَمْدُ</span>.</p>
+<h3>لام لفظ الجلالة</h3>
+<p><b>مفخّمة</b> بعد الفتح أو الضم: <span class="ar">قَالَ اللَّهُ · عَبْدُ اللَّهِ</span>. <b>مرقّقة</b> بعد الكسر: <span class="ar">بِاللَّهِ · لِلَّهِ</span>.</p>
+<h3>الراء</h3>
+<p><b>متحركة.</b> مفخّمة مع الفتح أو الضم (<span class="ar">رَبِّ · رُحَمَاءُ</span>)، ومرقّقة مع الكسر (<span class="ar">رِزْقًا</span>).<br><b>ساكنة.</b> مفخّمة بعد فتح أو ضم (<span class="ar">مَرْيَمُ · كُرْسِيٌّ</span>)، ومرقّقة بعد كسر (<span class="ar">فِرْعَوْنُ</span>). وإذا وقع بعد الكسر حرف استعلاء فُخّمت (<span class="ar">فِرْقٍ</span>). وما بعد ياء ساكنة يُراجع مع الشيخ (<span class="ar">مَجْرَىٰ</span>).</p>`},
+ {h:"٩. همزة الوصل وهمزة القطع",b:`
+<p><b>الوصل</b> (<span class="ar">ٱ</span>) تُنطق في الابتداء فقط، وتسقط عند الوصل. وتكون في <span class="ar">ٱل</span> التعريف، وبعض الأفعال في الأمر، وفي أسماء مثل <span class="ar">ٱبْن · ٱسْم</span>. <b>المثال.</b> <span class="ar">ٱلْحَمْدُ لِلَّهِ · ٱسْتَعِينُوا</span></p>
+<p><b>القطع</b> (<span class="ar">أ</span>) تُنطق دائمًا، ولو وُصلت. <b>المثال.</b> <span class="ar">أَنْعَمْتَ · إِنَّ</span></p>
+<p class="note">تُبدأ همزة الوصل بحركتها، وتُسقط في الدرج ويُوصل ما قبلها بما بعدها.</p>`},
+ {h:"١٠. الوقف والابتداء",b:`
+<h3>أنواع الوقف</h3>
+<p><b>تامّ</b>: تمّ المعنى ولا يتعلّق بما بعده. <b>كافٍ</b>: تمّ المعنى وتعلّق بما بعده في المعنى. <b>حسن</b>: تمّ المعنى وتعلّق بما بعده لفظًا. <b>قبيح</b>: يقطع المعنى الأساسي.</p>
+<h3>كيفية الوقف</h3>
+<p>يُسكَّن آخر الكلمة؛ ويُبدل تنوين الفتح ألفًا (<span class="ar">أَحَدًا → أَحَدَا</span>)؛ وتُبدل التاء المربوطة هاءً (<span class="ar">رَحْمَةٌ → رَحْمَهْ</span>).</p>
+<h3>علامات المصحف</h3>
+<div class="tbl"><table>
+<tr><th>العلامة</th><th>معناها</th></tr>
+<tr><td class="ar">م</td><td>الوقف لازم.</td></tr>
+<tr><td class="ar">لا</td><td>لا تقف.</td></tr>
+<tr><td class="ar">ج</td><td>الوقف جائز، والوصل جائز.</td></tr>
+<tr><td class="ar">قلى</td><td>الوقف أولى.</td></tr>
+<tr><td class="ar">صلى</td><td>الوصل أولى.</td></tr>
+</table></div>
+<p class="note">تختلف صور العلامات باختلاف المصاحف؛ فارجع إلى مفتاح مصحفك.</p>`},
+ {h:"١١. أخطاء التلاوة",b:`
+<p><b>اللحن الجلي</b>: تغيير حرف أو حركة أو سكون بما يغيّر المعنى، وهو أشدّ الأخطاء ويجب تصحيحه فورًا.</p>
+<p><b>اللحن الخفي</b>: ترك غنّة، أو قصر مدّ، أو إهمال قلقلة أو تفخيم. لا يتغيّر المعنى، لكن يفقد الأداء دقّته.</p>
+<p class="note">ما لا يُستدرك بالسماع يُصلَح بالمشافهة: استمع، وكرّر، واعرض على من يصحّح لك.</p>`},
+ {h:"١٢. كيف تتقدّم",b:`
+<ol>
+<li><b>استمع.</b> اختر قارئًا معروفًا في التطبيق واتبع كل آية قبل قراءتها.</li>
+<li><b>كرّر.</b> اقرأ الآية بصوت مسموع ثم قارنها بالنموذج؛ ولهذا وُضع وضع «المعلّم».</li>
+<li><b>صحّح.</b> خُذ قاعدة واحدة في كل مرة: أسبوعًا للنون الساكنة، ثم أسبوعًا للمدود.</li>
+<li><b>اعرض.</b> شيخ مجاز يصحّح ما لا تدركه الأذن وحدها.</li>
+</ol>
+<p class="note">الاستمرار خير من الكثرة: عشر دقائق كل يوم بتدبّر أنفع من ساعة بلا سماع.</p>`}
+ ]},
+en:{
+ code:"EN",
+ docTitle:"Tajweed rules - Quran Teacher",
+ back:"&larr; Back to reading",
+ h1:"Tajweed rules",
+ lead:"A revision guide for the reading of Hafs ʿan ʿĀsim, laid out as in the teaching manuals of the King Fahd Complex for the Printing of the Holy Quran: for each rule, a definition, the letters involved, the condition, an example and the duration. Tajweed is learned orally from a qualified teacher: this page is for revision and does not replace one. Durations are counted in ḥarakāt (beats).",
+ foot:"<b>Sources and references.</b> The reading of Hafs ʿan ʿĀsim as in the Madinah muṣḥaf; terminology follows the tajweed manuals (Matn Tuḥfat al-Aṭfāl, al-Muqaddima al-Jazariyya). Text colours come from the quran-tajweed edition. Check every rule with your teacher: a teacher's ear cannot be replaced.",
+ sec:[
+ {h:"1. Colours used in the app",b:`
+<p>Colour does not replace learning: it is a visual marker for the rule applied at that spot.</p>
+<p><span class="dot" style="background:#8a9a93"></span><b>Grey</b>: silent letter, lām shamsiyya, hamzat al-waṣl.</p>
+<p><span class="dot" style="background:#e8a33d"></span><b>Orange</b>: natural madd (2 beats). <b>Light orange</b>: permissible madd (2, 4 or 6 beats).</p>
+<p><span class="dot" style="background:#e0553d"></span><b>Red</b>: obligatory madd (4 to 6 beats).</p>
+<p><span class="dot" style="background:#4db1ff"></span><b>Blue</b>: qalqala.</p>
+<p><span class="dot" style="background:#5fd37a"></span><b>Green</b>: ikhfāʾ.</p>
+<p><span class="dot" style="background:#c58bff"></span><b>Purple</b>: iqlāb.</p>
+<p><span class="dot" style="background:#7fd6d0"></span><b>Turquoise</b>: idghām.</p>
+<p><span class="dot" style="background:#ff8fb0"></span><b>Pink</b>: ghunna.</p>
+<p class="note">These colours come from the text source and differ between editions. When in doubt, the written rule below is authoritative.</p>`},
+ {h:"2. Points of articulation (makhārij): 17",b:`
+<p><b>Definition.</b> The <i>makhraj</i> is the place from which a letter emerges; it is what distinguishes one letter from another. Scholars count <b>17</b>, grouped in <b>5 areas</b>.</p>
+<div class="tbl"><table>
+<tr><th>Area</th><th>Letters</th><th>How the sound is formed</th></tr>
+<tr><td>Al-Jawf — mouth and throat cavity</td><td class="ar">ا و ي</td><td>Air passes freely, with no obstacle: these are the madd letters.</td></tr>
+<tr><td>Throat: deepest part</td><td class="ar">ء ه</td><td>Sound produced at the very back, near the larynx.</td></tr>
+<tr><td>Throat: middle</td><td class="ar">ع ح</td><td>Narrowing in the middle of the throat.</td></tr>
+<tr><td>Throat: upper part</td><td class="ar">غ خ</td><td>Narrowing high in the throat, near the mouth.</td></tr>
+<tr><td>Tongue: back + soft palate</td><td class="ar">ق</td><td>Back of the tongue rises to the soft palate.</td></tr>
+<tr><td>Tongue: slightly forward</td><td class="ar">ك</td><td>Further forward than qāf, against the hard palate.</td></tr>
+<tr><td>Tongue: middle + hard palate</td><td class="ar">ج ش ي</td><td>Middle of the tongue touches the hard palate.</td></tr>
+<tr><td>Tongue: side + molars</td><td class="ar">ض</td><td>Side of the tongue presses on the upper molars.</td></tr>
+<tr><td>Tongue: front side + palate</td><td class="ar">ل</td><td>Front side touches the gum of the upper incisors.</td></tr>
+<tr><td>Tongue: tip, below lām</td><td class="ar">ن</td><td>Tip of the tongue just behind the incisors.</td></tr>
+<tr><td>Tongue: tip, slightly back</td><td class="ar">ر</td><td>Tip a little further back, with a light vibration.</td></tr>
+<tr><td>Tip + base of upper incisors</td><td class="ar">ط د ت</td><td>Tip touches the base of the upper incisors.</td></tr>
+<tr><td>Tip + incisors (whistling)</td><td class="ar">ص س ز</td><td>Tip approaches the incisors: a whistle accompanies the sound.</td></tr>
+<tr><td>Tip + edge of upper incisors</td><td class="ar">ظ ذ ث</td><td>Tip comes slightly out between the teeth.</td></tr>
+<tr><td>Lips: lower lip + incisors</td><td class="ar">ف</td><td>Lower lip touches the edge of the upper incisors.</td></tr>
+<tr><td>Lips: both lips</td><td class="ar">ب م و</td><td>The lips meet (wāw with rounded lips).</td></tr>
+<tr><td>Al-Khayshūm — nasal cavity</td><td>ghunna</td><td>Nasal resonance accompanies doubled nūn and mīm.</td></tr>
+</table></div>
+<p class="note">Two letters may share an area and remain distinct: their attributes separate them (see §3).</p>`},
+ {h:"3. Letter attributes (ṣifāt)",b:`
+<p><b>Definition.</b> The <i>ṣifāt</i> describe how a letter leaves its point of articulation. Some attributes have an opposite; others stand alone.</p>
+<div class="tbl"><table>
+<tr><th>Attribute</th><th>Meaning</th><th>Letters</th></tr>
+<tr><td>Hams / Jahr</td><td>Hams: a breath accompanies the sound. Jahr: the voice is held, with no breath.</td><td>Hams: <span class="ar">ف ح ث ه ش خ ص س ك ت</span> — the rest are jahr.</td></tr>
+<tr><td>Shidda / Tawassuṭ / Rakhāwa</td><td>Shidda: the sound stops sharply. Tawassuṭ: neither stop nor flow. Rakhāwa: the sound flows.</td><td>Shidda: <span class="ar">أ ج د ق ط ب ك ت</span> · Tawassuṭ: <span class="ar">ل ن ع م ر</span> · the rest: rakhāwa.</td></tr>
+<tr><td>Istiʿlāʾ / Istifāl</td><td>Istiʿlāʾ: the tongue rises, the letter is heavy (tafkhīm). Istifāl: the tongue stays low, the letter is light (tarqīq).</td><td>Istiʿlāʾ: <span class="ar">خ ص ض غ ط ق ظ</span> — the rest: istifāl.</td></tr>
+<tr><td>Iṭbāq / Infitāḥ</td><td>Iṭbāq: the tongue presses to the palate, a stronger closure. Infitāḥ: it does not.</td><td>Iṭbāq: <span class="ar">ص ض ط ظ</span> — the rest: infitāḥ.</td></tr>
+<tr><td>Idhlāq / Iṣmat</td><td>Idhlāq: ease of pronunciation. Iṣmat: firmer pronunciation.</td><td>Idhlāq: <span class="ar">ف ر م ن ل ب</span> — the rest: iṣmat.</td></tr>
+<tr><td>Safīr</td><td>A high whistle accompanying the letter.</td><td><span class="ar">ص س ز</span></td></tr>
+<tr><td>Qalqala</td><td>A light bounce of the sound when the letter has no vowel.</td><td><span class="ar">ق ط ب ج د</span> — see §6.</td></tr>
+<tr><td>Līn</td><td>Softness of wāw and yāʾ without vowel after a fatḥa.</td><td><span class="ar">و ي</span> — see §7.</td></tr>
+<tr><td>Inḥirāf</td><td>The sound glides towards another articulation point.</td><td><span class="ar">ل ر</span></td></tr>
+<tr><td>Takrīr</td><td>Vibration of the tongue tip.</td><td><span class="ar">ر</span> — without exaggeration.</td></tr>
+<tr><td>Tafashshī</td><td>The breath spreads through the mouth.</td><td><span class="ar">ش</span></td></tr>
+<tr><td>Istīṭāla</td><td>The sound extends along the side of the tongue.</td><td><span class="ar">ض</span></td></tr>
+</table></div>
+<p class="note">A letter is heavy (tafkhīm) or light (tarqīq) according to istiʿlāʾ and context; your teacher's ear settles borderline cases.</p>`},
+ {h:"4. Nūn sākin and tanwīn",b:`
+<p><b>Definition.</b> <i>Nūn sākin</i> is a nūn without a vowel; <i>tanwīn</i> is the doubled final vowel (ـًا ـٌ ـٍ), pronounced as a nūn sākin followed by a vowel. Four rules apply according to the following letter.</p>
+<h3>Iẓhār (clear) <span class="tag">6 letters</span></h3>
+<p><b>Letters.</b> <span class="ar">ء ه ع ح غ خ</span> (throat). <b>Condition.</b> The nūn or tanwīn is pronounced clearly, without ghunna. <b>Examples.</b> <span class="ar">مَنْ هَادٍ · أَنْعَمْتَ · يَنْهَوْنَ</span></p>
+<h3>Idghām (merging) <span class="tag">6 letters</span></h3>
+<p><b>Letters.</b> <span class="ar">ي ر م ل و ن</span>. <b>With ghunna</b> for <span class="ar">ي ن م و</span> (<span class="ar">مَنْ يَقُولُ · مِنْ نُطْفَةٍ · مِنْ مَاءٍ · مِنْ وَلِيٍّ</span>); <b>without ghunna</b> for <span class="ar">ل ر</span> (<span class="ar">مِنْ رَبِّهِمْ · فَإِنْ لَمْ تَفْعَلُوا</span>). <b>Condition.</b> Merging occurs only between two words; inside one word we return to iẓhār: <span class="ar">دُنْيَا · بُنْيَان · صِنْوَان · قِنْوَان</span>.</p>
+<h3>Iqlāb (conversion) <span class="tag">1 letter</span></h3>
+<p><b>Letter.</b> <span class="ar">ب</span>. <b>Effect.</b> The nūn becomes a mīm, pronounced with ikhfāʾ and ghunna of <b>2 beats</b>. <b>Examples.</b> <span class="ar">أَنْبِئْهُمْ · مِنْ بَعْدِ · سَمِيعٌ بَصِيرٌ</span></p>
+<h3>Ikhfāʾ (concealment) <span class="tag">15 letters</span></h3>
+<p><b>Letters.</b> <span class="ar">ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</span>. <b>Effect.</b> The sound is concealed between iẓhār and idghām, with ghunna of <b>2 beats</b>. <b>Examples.</b> <span class="ar">أَنْتُمْ · مِنْ قَبْلِ · كُنْتُمْ · جُنْدٌ</span>. The degree varies — closest to idghām, intermediate, closest to iẓhār — according to the distance of the articulation points.</p>`},
+ {h:"5. Mīm sākin",b:`
+<p><b>Definition.</b> A mīm without a vowel. Only three rules, called <i>shafawiyya</i> because they are pronounced with the lips.</p>
+<h3>Ikhfāʾ shafawī <span class="tag">before ب</span></h3>
+<p>The mīm is concealed with ghunna of <b>2 beats</b>; the lips barely touch. <b>Examples.</b> <span class="ar">تَرْمِيهِمْ بِحِجَارَةٍ · أَمْ بِهِ</span></p>
+<h3>Idghām shafawī <span class="tag">before م</span></h3>
+<p>The two mīm merge, with ghunna of <b>2 beats</b>. <b>Examples.</b> <span class="ar">لَهُمْ مَغْفِرَةٌ · مِنْ مَالٍ</span></p>
+<h3>Iẓhār shafawī <span class="tag">all other letters</span></h3>
+<p>The mīm is pronounced clearly, without a drawn-out ghunna; take care before <span class="ar">و</span> and <span class="ar">ف</span> so the lips stay distinct. <b>Examples.</b> <span class="ar">لَهُمْ فِيهَا · وَهُمْ وَاقِفُونَ</span></p>`},
+ {h:"6. Ghunna and qalqala",b:`
+<h3>Ghunna</h3>
+<p><b>Definition.</b> The nasal sound resonating in the nasal cavity. <b>Obligatory</b> on nūn and mīm carrying a shadda (<span class="ar">نّ مّ</span>): it lasts <b>2 beats</b>. <b>Examples.</b> <span class="ar">إِنَّ · ثُمَّ</span>. It is also <b>2 beats</b> in idghām, iqlāb and ikhfāʾ. A distinction is made between <i>mushaddada</i> (strengthened) and <i>mukhaffafa</i> (lightened) ghunna; either way it lasts 2 beats.</p>
+<h3>Qalqala</h3>
+<p><b>Letters.</b> <span class="ar">ق ط ب ج د</span>. <b>Definition.</b> A light bounce of the sound when the letter has no vowel (sukūn). Two degrees: <b>sughrā</b> (light, inside a word: <span class="ar">يَجْعَلُونَ</span>) and <b>kubrā</b> (stronger, when stopping: <span class="ar">أَحَدْ</span>). Qalqala must never turn into a vowel.</p>`},
+ {h:"7. Madd (prolongation)",b:`
+<p><b>Definition.</b> Stretching the voice on a madd letter: <span class="ar">ا و ي</span>. It is measured in <i>ḥarakāt</i> (beats); 2 beats equal the length of a short vowel.</p>
+<div class="tbl"><table>
+<tr><th>Type</th><th>Condition</th><th>Example</th><th>Duration</th></tr>
+<tr><td>Ṭabīʿī (aṣlī)</td><td>Madd letter with no hamza or sukūn after it.</td><td class="ar">قَالَ · يَقُولُ · قِيلَ</td><td>2</td></tr>
+<tr><td>Badal</td><td>A hamza before the madd letter.</td><td class="ar">آمَنُوا · إِيمَانًا</td><td>2</td></tr>
+<tr><td>ʿIwaḍ</td><td>Stopping on a tanwīn fatḥa: read as an alif.</td><td class="ar">أَحَدًا ← أَحَدَا</td><td>2</td></tr>
+<tr><td>Ṣila sughrā</td><td>Pronoun hāʾ between two vowels, no hamza after.</td><td class="ar">إِنَّهُ هُوَ</td><td>2</td></tr>
+<tr><td>Ṣila kubrā</td><td>Pronoun hāʾ followed by a hamza.</td><td class="ar">بِهِ أَحَدًا</td><td>4 to 5</td></tr>
+<tr><td>Muttaṣil</td><td>Madd letter followed by a hamza in the same word.</td><td class="ar">جَاءَ · السَّمَاءِ</td><td>4 to 5 <i>(obligatory)</i></td></tr>
+<tr><td>Munfaṣil</td><td>Madd letter at the end of a word, hamza starting the next.</td><td class="ar">بِمَا أُنْزِلَ</td><td>2 to 5</td></tr>
+<tr><td>ʿĀriḍ li-l-sukūn</td><td>Madd letter followed by a sukūn caused by stopping.</td><td class="ar">نَسْتَعِينُ</td><td>2, 4 or 6</td></tr>
+<tr><td>Līn</td><td>Wāw or yāʾ without vowel after a fatḥa, when stopping.</td><td class="ar">خَوْفٍ · بَيْتٍ</td><td>2, 4 or 6</td></tr>
+<tr><td>Lāzim</td><td>Madd letter followed by a permanent sukūn or shadda, or isolated letters opening a surah.</td><td class="ar">الضَّالِّينَ · الٓمٓ</td><td>6 <i>(obligatory)</i></td></tr>
+</table></div>
+<p class="note">Choosing 2, 4 or 6 beats for munfaṣil, ʿāriḍ and līn depends on the school and the teacher; the essential point is to stay consistent within one reading.</p>`},
+ {h:"8. Lām and rāʾ",b:`
+<h3>Lām of the article</h3>
+<p><b>Shamsiyya</b> (not pronounced; the next letter is doubled) before <span class="ar">ت ث د ذ ر ز س ش ص ض ط ظ ل ن</span>: <span class="ar">الشَّمْسُ · الرَّحْمَنُ</span>.<br><b>Qamariyya</b> (pronounced with sukūn) before <span class="ar">ا ب ج ح خ ع غ ف ق ك م و ه ي</span>: <span class="ar">الْقَمَرُ · الْحَمْدُ</span>.</p>
+<h3>Lām in the name of Allah</h3>
+<p><b>Heavy (tafkhīm)</b> after fatḥa or ḍamma: <span class="ar">قَالَ اللَّهُ · عَبْدُ اللَّهِ</span>. <b>Light (tarqīq)</b> after kasra: <span class="ar">بِاللَّهِ · لِلَّهِ</span>.</p>
+<h3>Rāʾ</h3>
+<p><b>With a vowel.</b> Heavy with fatḥa or ḍamma (<span class="ar">رَبِّ · رُحَمَاءُ</span>), light with kasra (<span class="ar">رِزْقًا</span>).<br><b>Sākin.</b> Heavy after fatḥa or ḍamma (<span class="ar">مَرْيَمُ · كُرْسِيٌّ</span>), light after kasra (<span class="ar">فِرْعَوْنُ</span>). After a kasra followed by an istiʿlāʾ letter it becomes heavy (<span class="ar">فِرْقٍ</span>). After a yāʾ sākin, study the case with your teacher (<span class="ar">مَجْرَىٰ</span>).</p>`},
+ {h:"9. Hamzat al-waṣl and hamzat al-qaṭʿ",b:`
+<p><b>Waṣl</b> (<span class="ar">ٱ</span>): pronounced only at the start of recitation; it disappears when joining. Found in the article <span class="ar">ٱل</span>, in some imperative verbs and in certain nouns (<span class="ar">ٱبْن · ٱسْم</span>). <b>Examples.</b> <span class="ar">ٱلْحَمْدُ لِلَّهِ · ٱسْتَعِينُوا</span></p>
+<p><b>Qaṭʿ</b> (<span class="ar">أ</span>): always pronounced, even when joining. <b>Examples.</b> <span class="ar">أَنْعَمْتَ · إِنَّ</span></p>
+<p class="note">At the start of recitation the waṣl is pronounced with its own vowel; mid-phrase it is dropped and the words are joined.</p>`},
+ {h:"10. Stopping (waqf) and resuming (ibtidāʾ)",b:`
+<h3>Types of stop</h3>
+<p><b>Tāmm</b> (complete): the meaning is finished and the next part is not attached to it. <b>Kāfī</b> (sufficient): the meaning is finished but the next part is connected in meaning. <b>Ḥasan</b> (good): the meaning is finished but the next part is grammatically connected. <b>Qabīḥ</b> (bad): the stop cuts an essential idea.</p>
+<h3>How to stop</h3>
+<p>The last letter takes a sukūn; tanwīn fatḥa becomes an alif (<span class="ar">أَحَدًا → أَحَدَا</span>); tāʾ marbūṭa becomes hāʾ (<span class="ar">رَحْمَةٌ → رَحْمَهْ</span>).</p>
+<h3>Signs in the muṣḥaf</h3>
+<div class="tbl"><table>
+<tr><th>Sign</th><th>Meaning</th></tr>
+<tr><td class="ar">م</td><td>Obligatory stop.</td></tr>
+<tr><td class="ar">لا</td><td>Do not stop.</td></tr>
+<tr><td class="ar">ج</td><td>Stopping is allowed; continuing is allowed too.</td></tr>
+<tr><td class="ar">قلى</td><td>Stopping is preferable.</td></tr>
+<tr><td class="ar">صلى</td><td>Continuing is preferable.</td></tr>
+</table></div>
+<p class="note">The shape of these signs varies between muṣḥafs: check the key of your edition.</p>`},
+ {h:"11. Recitation mistakes",b:`
+<p><b>Laḥn jalī</b> (obvious mistake): changing a letter, a vowel or a sukūn in a way that alters the meaning. It is the most serious fault and must be corrected at once.</p>
+<p><b>Laḥn khafī</b> (subtle mistake): missing a ghunna, shortening a madd, neglecting a qalqala or the heaviness of a letter. The meaning is intact, but the recitation loses precision.</p>
+<p class="note">A mistake you cannot fix by listening is fixed face to face: listen, repeat, have it corrected.</p>`},
+ {h:"12. How to make progress",b:`
+<ol>
+<li><b>Listen.</b> Choose a recognised reciter in the app and follow each verse before reading it.</li>
+<li><b>Repeat.</b> Recite the verse aloud, then compare with the model; the “Teacher” mode is made for this.</li>
+<li><b>Correct.</b> Work one rule at a time: a week on nūn sākin, the next on madd.</li>
+<li><b>Have it checked.</b> A qualified teacher, ideally with ijāza, corrects what the ear alone cannot hear.</li>
+</ol>
+<p class="note">Regularity beats quantity: ten attentive minutes a day do more than an hour without listening.</p>`}
+ ]}};
+
+const LANGS=["fr","ar","en"],CODE={fr:"FR",ar:"ع",en:"EN"};
+let lang=localStorage.getItem("cwl");if(!LANGS.includes(lang))lang="fr";
+const $=id=>document.getElementById(id);
+function render(){
+ const t=D[lang];
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.title=t.docTitle;
+ $("back").innerHTML=t.back;
+ $("h1").textContent=t.h1;
+ $("lead").innerHTML=t.lead;
+ $("secs").innerHTML=t.sec.map((s,i)=>'<details'+(i===0?' open':'')+'><summary>'+s.h+'</summary>'+s.b+'</details>').join('');
+ $("foot").innerHTML=t.foot;
+ $("lang").textContent=t.code;
+ $("lang").setAttribute("aria-label",lang==="fr"?"Langue : français":lang==="ar"?"اللغة: العربية":"Language: English");
+}
+$("lang").onclick=()=>{lang=LANGS[(LANGS.indexOf(lang)+1)%LANGS.length];localStorage.setItem("cwl",lang);render();window.scrollTo({top:0,behavior:"smooth"})};
+render();
+</script></main></body></html>
